@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Password-manager-Android</string>
+    <string name="app_name">Password manager</string>
     <string name="hint_password">Password</string>
     <string name="enter">Enter</string>
     <string name="registration">Registration</string>
