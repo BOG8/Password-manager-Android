@@ -8,6 +8,7 @@
     tools:context="com.bog.password_manager_android.MainActivity">
 
     <EditText
+        android:id="@+id/password_edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/hint_password"

@@ -1,6 +1,5 @@
 package com.bog.password_manager_android;
 
-import android.util.Base64;
 import android.util.Log;
 
 import java.security.AlgorithmParameters;
@@ -51,7 +50,7 @@ class PasswordCipher {
         return null;
     }
 
-    public void encrypt(String data) {
+    void encrypt(String data) {
         try {
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
             cipher.init(Cipher.ENCRYPT_MODE, generateKey());
@@ -63,7 +62,7 @@ class PasswordCipher {
         }
     }
 
-    public String decrypt(byte[] cipherData, byte[] iv) {
+    String decrypt(byte[] cipherData, byte[] iv) {
         try {
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
             cipher.init(Cipher.DECRYPT_MODE, generateKey(), new IvParameterSpec(iv));
@@ -74,27 +73,19 @@ class PasswordCipher {
         return null;
     }
 
-    public static String byteToString(byte[] buf) {
-        return Base64.encodeToString(buf, Base64.DEFAULT);
-    }
-
-    public static byte[] stringToByte(String str) {
-        return Base64.decode(str, Base64.DEFAULT);
-    }
-
-    public void setPassword(String password) {
+    void setPassword(String password) {
         this.password = password;
     }
 
-    public byte[] getIv() {
-        return iv;
+    String getIv() {
+        return Converter.toString(iv);
     }
 
-    public byte[] getCipherData() {
-        return cipherData;
+    String getCipherData() {
+        return Converter.toString(cipherData);
     }
 
-    public void clearCipher() {
+    void clearCipher() {
         iv = null;
         cipherData = null;
     }
