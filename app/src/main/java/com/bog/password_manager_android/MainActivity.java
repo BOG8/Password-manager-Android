@@ -12,6 +12,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        findViewById(R.id.entering_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, ResourceActivity.class));
+            }
+        });
         findViewById(R.id.registration_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
