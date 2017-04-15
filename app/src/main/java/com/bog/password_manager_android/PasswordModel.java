@@ -7,7 +7,7 @@ import java.util.Map;
  */
 
 class PasswordModel {
-    String name;
-    String password;
-    Map<String, String> additionalFields;
+    public String name;
+    public String password;
+    public Map<String, String> additionalFields;
 }
