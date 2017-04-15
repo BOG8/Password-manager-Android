@@ -6,15 +6,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     private final static String PASSWORD_MANAGER = "Password manager";
     private final static String CIPHER_DATA = "cipher data";
     private final static String IV = "iv";
-    private final static String INITIAL_DATA = "{\"amount\": 0}";
-    private final static String WRONG_PASSWORD = "Wrong password";
-    private final static String NO_PASS = "Please, enter your password";
+    private final static String INITIAL_DATA = "[{\"name\": \"Example.com\", \"password\": \"MyPass1234\", \"additionalFields\": {\"login\": \"LoginExample\"}}]" ;
 
     private SharedPreferences preferences;
 
@@ -39,14 +38,14 @@ public class MainActivity extends AppCompatActivity {
                         if (clearData != null) {
                             startActivity(new Intent(MainActivity.this, ResourceActivity.class));
                         } else {
-                            Toast.makeText(MainActivity.this, WRONG_PASSWORD, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this, R.string.wrong_password, Toast.LENGTH_SHORT).show();
                         }
                     } else {
                         initializeData(cipher);
                         startActivity(new Intent(MainActivity.this, ResourceActivity.class));
                     }
                 } else {
-                    Toast.makeText(MainActivity.this, NO_PASS, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, R.string.empty_password, Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -57,6 +56,17 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, RegistrationActivity.class));
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (preferences.getString(CIPHER_DATA, null) == null) {
+            ((TextView) findViewById(R.id.no_pass_text)).setText(R.string.no_pass_text);
+        } else {
+            ((TextView) findViewById(R.id.no_pass_text)).setText(null);
+        }
     }
 
     void initializeData(PasswordCipher cipher) {
