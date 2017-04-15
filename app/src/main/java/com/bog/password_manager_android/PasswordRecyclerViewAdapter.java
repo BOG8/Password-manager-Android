@@ -36,12 +36,13 @@ public class PasswordRecyclerViewAdapter extends RecyclerView.Adapter<PasswordRe
     }
 
     public PasswordRecyclerViewAdapter(PasswordModel password) {
-        mDataset = new ArrayList<Pair<String, String>>();
+        mDataset = new ArrayList<>();
         if (password != null) {
             mDataset.add(Pair.create("name", password.name));
             mDataset.add(Pair.create("password", password.password));
-            for (Map.Entry<String, String> e : password.additionalFields.entrySet())
+            for (Map.Entry<String, String> e : password.additionalFields.entrySet()) {
                 mDataset.add(Pair.create(e.getKey(), e.getValue()));
+            }
         }
     }
 
@@ -50,8 +51,7 @@ public class PasswordRecyclerViewAdapter extends RecyclerView.Adapter<PasswordRe
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.password_field_view, parent, false);
 
-        ViewHolder vh = new ViewHolder((LinearLayout) v);
-        return vh;
+        return new ViewHolder((LinearLayout) v);
     }
 
     @Override

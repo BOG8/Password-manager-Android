@@ -1,15 +1,14 @@
 package com.bog.password_manager_android;
 
+import android.content.SharedPreferences;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.View;
 
 import java.util.List;
+
+import static com.bog.password_manager_android.MainActivity.*;
 
 public class ResourceActivity extends AppCompatActivity
         implements ListRecyclerViewAdapter.IResourceEntryClickListener {
@@ -17,15 +16,12 @@ public class ResourceActivity extends AppCompatActivity
     private static String FRAGMENT_TAG = "some_tag";
     List<PasswordModel> resources;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_resource);
 
-        resources = PasswordsStringConvertor.deserialize(
-            "[{\"name\": \"Yandex.ru\", \"password\": \"keks\", \"additionalFields\": {\"login\": \"abc\"}}," +
-            "{\"name\": \"Rambler.ru\", \"password\": \"lol\", \"additionalFields\": {\"login\": \"ee\"}}]");
+        fillResources();
 
         Fragment prevFragment = getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG);
         if (prevFragment == null) {
@@ -35,8 +31,7 @@ public class ResourceActivity extends AppCompatActivity
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.fragment_container, newFragment);
             transaction.commitAllowingStateLoss();
-        }
-        else {
+        } else {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.fragment_container, prevFragment, FRAGMENT_TAG);
             transaction.commitAllowingStateLoss();
@@ -51,5 +46,14 @@ public class ResourceActivity extends AppCompatActivity
         transaction.replace(R.id.fragment_container, newFragment, FRAGMENT_TAG);
         transaction.addToBackStack(null);
         transaction.commitAllowingStateLoss();
+    }
+
+    private void fillResources() {
+        SharedPreferences preferences = getSharedPreferences(PASSWORD_MANAGER, 0);
+        String cipherData = preferences.getString(CIPHER_DATA, null);
+        String iv = preferences.getString(IV, null);
+        PasswordCipher cipher = PasswordCipher.getInstance();
+        String clearData = cipher.decrypt(Converter.toByte(cipherData), Converter.toByte(iv));
+        resources = PasswordsStringConvertor.deserialize(clearData);
     }
 }

@@ -31,8 +31,9 @@ public class ListRecyclerViewAdapter extends RecyclerView.Adapter<ListRecyclerVi
 
         @Override
         public void onClick(View v) {
-            if (onClickListener != null)
+            if (onClickListener != null) {
                 onClickListener.onResourceEntryClick(resourceIndex);
+            }
         }
     }
 
@@ -47,8 +48,7 @@ public class ListRecyclerViewAdapter extends RecyclerView.Adapter<ListRecyclerVi
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.password_view, parent, false);
 
-        ViewHolder vh = new ViewHolder((LinearLayout) v, 0, onClickListener);
-        return vh;
+        return new ViewHolder((LinearLayout) v, 0, onClickListener);
     }
 
     @Override

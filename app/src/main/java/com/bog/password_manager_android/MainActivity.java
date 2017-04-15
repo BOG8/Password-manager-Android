@@ -10,9 +10,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
-    private final static String PASSWORD_MANAGER = "Password manager";
-    private final static String CIPHER_DATA = "cipher data";
-    private final static String IV = "iv";
+    final static String PASSWORD_MANAGER = "Password manager";
+    final static String CIPHER_DATA = "cipher data";
+    final static String IV = "iv";
     private final static String INITIAL_DATA = "[{\"name\": \"Example.com\", \"password\": \"MyPass1234\", \"additionalFields\": {\"login\": \"LoginExample\"}}]" ;
 
     private SharedPreferences preferences;
@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    void initializeData(PasswordCipher cipher) {
+    private void initializeData(PasswordCipher cipher) {
         cipher.encrypt(INITIAL_DATA);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString(CIPHER_DATA, cipher.getCipherData());

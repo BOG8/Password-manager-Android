@@ -20,6 +20,7 @@ public class ListFragment extends Fragment
     ListRecyclerViewAdapter.IResourceEntryClickListener onResourceEntryClickListener;
 
     public ListFragment() {
+
     }
 
     @Override
@@ -29,8 +30,9 @@ public class ListFragment extends Fragment
 
     public void setContent(List<PasswordModel> passwords) {
         mAdapter = new ListRecyclerViewAdapter(passwords, this);
-        if (mRecyclerView != null)
+        if (mRecyclerView != null) {
             mRecyclerView.swapAdapter(mAdapter, false);
+        }
     }
 
     public void setClickListener(ListRecyclerViewAdapter.IResourceEntryClickListener listener) {
@@ -41,26 +43,25 @@ public class ListFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list, container, false);
-
         mRecyclerView = (RecyclerView) view.findViewById(R.id.passwordsList);
-
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(
                 mRecyclerView.getContext(), DividerItemDecoration.VERTICAL);
         mRecyclerView.addItemDecoration(dividerItemDecoration);
 
-        if (mAdapter != null)
+        if (mAdapter != null) {
             mRecyclerView.swapAdapter(mAdapter, false);
-        else
+        } else {
             setContent(new ArrayList<PasswordModel>());
-
+        }
         return view;
     }
 
     @Override
     public void onResourceEntryClick(int index) {
-        if (onResourceEntryClickListener != null)
+        if (onResourceEntryClickListener != null) {
             onResourceEntryClickListener.onResourceEntryClick(index);
+        }
     }
 }

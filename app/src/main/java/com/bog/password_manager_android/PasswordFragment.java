@@ -9,15 +9,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
-
-
 public class PasswordFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     ListRecyclerViewAdapter.IResourceEntryClickListener onResourceEntryClickListener;
 
     public PasswordFragment() {
+
     }
 
     @Override
@@ -28,8 +26,9 @@ public class PasswordFragment extends Fragment {
 
     public void setContent(PasswordModel password) {
         mAdapter = new PasswordRecyclerViewAdapter(password);
-        if (mRecyclerView != null)
+        if (mRecyclerView != null) {
             mRecyclerView.swapAdapter(mAdapter, false);
+        }
     }
 
     @Override
@@ -43,11 +42,11 @@ public class PasswordFragment extends Fragment {
                 mRecyclerView.getContext(), DividerItemDecoration.VERTICAL);
         mRecyclerView.addItemDecoration(dividerItemDecoration);
 
-        if (mAdapter != null)
+        if (mAdapter != null) {
             mRecyclerView.swapAdapter(mAdapter, false);
-        else
+        } else {
             setContent(null);
-
+        }
         return view;
     }
 }
