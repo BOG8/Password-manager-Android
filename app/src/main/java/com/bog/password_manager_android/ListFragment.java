@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,6 +62,31 @@ public class ListFragment extends Fragment
         } else {
             setContent(new ArrayList<PasswordModel>());
         }
+
+        ((Button) view.findViewById(R.id.add_resource))
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        resourceActivity.onAddResourceClick();
+                    }
+                });
+
+        ((Button) view.findViewById(R.id.download_resources))
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        resourceActivity.onDownloadResourcesClick();
+                    }
+                });
+
+        ((Button) view.findViewById(R.id.upload_resources))
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        resourceActivity.onUploadResourcesClick();
+                    }
+                });
+
         return view;
     }
 

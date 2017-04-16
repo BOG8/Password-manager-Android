@@ -12,7 +12,7 @@ import java.util.TreeMap;
 class PasswordModel implements Serializable, Cloneable {
     public String name;
     public String password;
-    public TreeMap<String, String> additionalFields;
+    public TreeMap<String, String> additionalFields = new TreeMap<>();
     public PasswordModel clone() {
         PasswordModel result = new PasswordModel();
         result.name = name;

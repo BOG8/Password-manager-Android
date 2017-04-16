@@ -9,9 +9,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 public class PasswordFragment extends Fragment {
-    public static final String RESOURCE_INDEX = "ResourceIndex";
+    public static final String RESOURCE_INDEX = "ResourceEditIndex";
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private ResourceActivity resourceActivity;
@@ -38,7 +39,8 @@ public class PasswordFragment extends Fragment {
         super.onStart();
         Bundle args = getArguments();
         if (args != null) {
-            setContent(resourceActivity.getResourcesList().get(args.getInt(RESOURCE_INDEX)));
+            resourceIndex = args.getInt(RESOURCE_INDEX);;
+            setContent(resourceActivity.getResourcesList().get(resourceIndex));
         }
     }
 
@@ -72,6 +74,15 @@ public class PasswordFragment extends Fragment {
         } else {
             setContent(null);
         }
+
+        ((Button) view.findViewById(R.id.edit_resource))
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        resourceActivity.onResourceEditClick(resourceIndex);
+                    }
+                });
+
         return view;
     }
 }

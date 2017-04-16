@@ -1,7 +1,6 @@
 package com.bog.password_manager_android;
 
 import android.content.SharedPreferences;
-import android.os.StrictMode;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -38,8 +37,8 @@ public class ResourceActivity extends AppCompatActivity
 
     @Override
     public void onResourceEntryClick(int index) {
-        PasswordEditFragment newFragment = new PasswordEditFragment();
-//        PasswordFragment newFragment = new PasswordFragment();
+//        PasswordEditFragment newFragment = new PasswordEditFragment();
+        PasswordFragment newFragment = new PasswordFragment();
         Bundle args = new Bundle();
         args.putInt(PasswordFragment.RESOURCE_INDEX, index);
         newFragment.setArguments(args);
@@ -61,4 +60,39 @@ public class ResourceActivity extends AppCompatActivity
     public List<PasswordModel> getResourcesList() {
         return resources;
     }
+
+    public void onAddResourceClick() {
+        PasswordEditFragment newFragment = new PasswordEditFragment();
+        Bundle args = new Bundle();
+        args.putInt(PasswordFragment.RESOURCE_INDEX, PasswordEditFragment.NEW_RESOURCE);
+        newFragment.setArguments(args);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, newFragment, FRAGMENT_TAG);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
+    public void onResourceEditClick(int index) {
+        PasswordEditFragment newFragment = new PasswordEditFragment();
+        Bundle args = new Bundle();
+        args.putInt(PasswordFragment.RESOURCE_INDEX, index);
+        newFragment.setArguments(args);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, newFragment, FRAGMENT_TAG);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
+    public void saveState() {
+        // TODO: add save member "resources" to sharedPreferences/Server
+    }
+
+    public void onDownloadResourcesClick() {
+        // TODO: download to member "resources" from server
+    }
+
+    public void onUploadResourcesClick() {
+        // TODO: upload member "resources" to server
+    }
+
 }

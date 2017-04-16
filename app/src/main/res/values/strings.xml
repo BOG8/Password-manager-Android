@@ -6,4 +6,12 @@
     <string name="registration">Registration</string>
     <string name="wrong_password">Wrong password</string>
     <string name="empty_password">Please, enter your password</string>
+    <string name="add_field">Add field</string>
+    <string name="remove_resource">Remove resource</string>
+    <string name="type_field_name">Type field name</string>
+    <string name="save_resource">Save</string>
+    <string name="add_resource">Add resource</string>
+    <string name="download">Download</string>
+    <string name="upload">Upload</string>
+    <string name="edit_resource">Edit resource</string>
 </resources>

@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 public class PasswordEditRecyclerViewAdapter
         extends RecyclerView.Adapter<PasswordEditRecyclerViewAdapter.ViewHolder> {
-    private int mResourceIndex;
     private PasswordModel currentPassword;
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -52,9 +51,8 @@ public class PasswordEditRecyclerViewAdapter
         }
     }
 
-    public PasswordEditRecyclerViewAdapter(PasswordModel password, int index) {
+    public PasswordEditRecyclerViewAdapter(PasswordModel password) {
         currentPassword = password;
-        mResourceIndex = index;
     }
 
     @Override
@@ -62,11 +60,12 @@ public class PasswordEditRecyclerViewAdapter
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.password_edit_field_view, parent, false);
 
-        return new ViewHolder((LinearLayout) v, 0, this);
+        return new ViewHolder((LinearLayout) v, -1, this);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        holder.fieldIndex = position;
         if (position == 0) {
             holder.mTextViewName.setText("name");
             holder.mTextViewValue.setText(currentPassword.name);
@@ -82,7 +81,6 @@ public class PasswordEditRecyclerViewAdapter
             holder.mTextViewValue.setText(currentPassword.additionalFields.get(key));
             holder.mButtonRemove.setVisibility(View.VISIBLE);
         }
-        holder.fieldIndex = position;
     }
 
     @Override
