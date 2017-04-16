@@ -19,19 +19,13 @@ import java.util.Map;
 public class PasswordRecyclerViewAdapter extends RecyclerView.Adapter<PasswordRecyclerViewAdapter.ViewHolder> {
     private List<Pair<String, String>> mDataset;
 
-    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView mTextViewName;
         public TextView mTextViewValue;
         public ViewHolder(LinearLayout v) {
             super(v);
-            v.setOnClickListener(this);
             mTextViewName = (TextView)v.findViewById(R.id.fieldName);
             mTextViewValue = (TextView)v.findViewById(R.id.fieldValue);
-        }
-
-        @Override
-        public void onClick(View v) {
-
         }
     }
 

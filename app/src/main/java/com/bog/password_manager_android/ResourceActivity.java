@@ -26,25 +26,27 @@ public class ResourceActivity extends AppCompatActivity
         Fragment prevFragment = getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG);
         if (prevFragment == null) {
             ListFragment newFragment = new ListFragment();
-            newFragment.setContent(resources);
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.fragment_container, newFragment);
-            transaction.commitAllowingStateLoss();
+            transaction.replace(R.id.fragment_container, newFragment, FRAGMENT_TAG);
+            transaction.commit();
         } else {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.fragment_container, prevFragment, FRAGMENT_TAG);
-            transaction.commitAllowingStateLoss();
+            transaction.commit();
         }
     }
 
     @Override
     public void onResourceEntryClick(int index) {
-        PasswordFragment newFragment = new PasswordFragment();
-        newFragment.setContent(resources.get(index));
+        PasswordEditFragment newFragment = new PasswordEditFragment();
+//        PasswordFragment newFragment = new PasswordFragment();
+        Bundle args = new Bundle();
+        args.putInt(PasswordFragment.RESOURCE_INDEX, index);
+        newFragment.setArguments(args);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, newFragment, FRAGMENT_TAG);
         transaction.addToBackStack(null);
-        transaction.commitAllowingStateLoss();
+        transaction.commit();
     }
 
     private void fillResources() {

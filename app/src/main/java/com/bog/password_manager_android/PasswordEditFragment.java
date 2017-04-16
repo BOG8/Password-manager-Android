@@ -10,14 +10,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class PasswordFragment extends Fragment {
+
+public class PasswordEditFragment extends Fragment {
     public static final String RESOURCE_INDEX = "ResourceIndex";
+    public static final String FIELDS_STATE = "FieldsState";
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private ResourceActivity resourceActivity;
+    private PasswordModel currentPassword;
     private int resourceIndex = -1;
 
-    public PasswordFragment() {
+    public PasswordEditFragment() {
 
     }
 
@@ -26,19 +29,28 @@ public class PasswordFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (savedInstanceState != null) {
             resourceIndex = savedInstanceState.getInt(RESOURCE_INDEX);
-            setContent(resourceActivity.getResourcesList().get(resourceIndex));
+            if (savedInstanceState.containsKey(FIELDS_STATE)) {
+                currentPassword = (PasswordModel) savedInstanceState.getSerializable(FIELDS_STATE);
+                mAdapter = new PasswordEditRecyclerViewAdapter(currentPassword, resourceIndex);
+            } else {
+                setContent(resourceIndex);
+            }
         } else {
-            setContent(null);
+            setContent(-1);
         }
-        //setRetainInstance(true);
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        Bundle args = getArguments();
-        if (args != null) {
-            setContent(resourceActivity.getResourcesList().get(args.getInt(RESOURCE_INDEX)));
+        if (resourceIndex == -1) {
+            Bundle args = getArguments();
+            if (args != null) {
+                resourceIndex = args.getInt(RESOURCE_INDEX);
+                setContent(resourceIndex);
+            } else {
+                setContent(-1);
+            }
         }
     }
 
@@ -48,9 +60,14 @@ public class PasswordFragment extends Fragment {
         resourceActivity = (ResourceActivity) activity;
     }
 
-
-    public void setContent(PasswordModel password) {
-        mAdapter = new PasswordRecyclerViewAdapter(password);
+    private void setContent(int resourceIndex) {
+        if (resourceIndex != -1) {
+            PasswordModel temp = resourceActivity.getResourcesList().get(resourceIndex);
+            currentPassword = temp.clone();
+        }
+        else
+            currentPassword = null;
+        mAdapter = new PasswordEditRecyclerViewAdapter(currentPassword, resourceIndex);
         if (mRecyclerView != null) {
             mRecyclerView.swapAdapter(mAdapter, false);
         }
@@ -59,8 +76,8 @@ public class PasswordFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_password, container, false);
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.passwordFields);
+        View view = inflater.inflate(R.layout.fragment_password_edit, container, false);
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.passwordEditFields);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(
@@ -70,8 +87,13 @@ public class PasswordFragment extends Fragment {
         if (mAdapter != null) {
             mRecyclerView.swapAdapter(mAdapter, false);
         } else {
-            setContent(null);
+            setContent(-1);
         }
         return view;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putSerializable(FIELDS_STATE, currentPassword);
     }
 }

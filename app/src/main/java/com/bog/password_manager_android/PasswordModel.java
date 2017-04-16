@@ -1,13 +1,23 @@
 package com.bog.password_manager_android;
 
+import java.io.Serializable;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * Created by alex on 14.04.2017.
  */
 
-class PasswordModel {
+class PasswordModel implements Serializable, Cloneable {
     public String name;
     public String password;
-    public Map<String, String> additionalFields;
+    public TreeMap<String, String> additionalFields;
+    public PasswordModel clone() {
+        PasswordModel result = new PasswordModel();
+        result.name = name;
+        result.password = password;
+        result.additionalFields = new TreeMap<>(additionalFields);
+        return result;
+    }
 }
