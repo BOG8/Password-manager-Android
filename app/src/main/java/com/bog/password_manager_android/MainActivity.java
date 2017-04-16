@@ -13,7 +13,8 @@ public class MainActivity extends AppCompatActivity {
     final static String PASSWORD_MANAGER = "Password manager";
     final static String CIPHER_DATA = "cipher data";
     final static String IV = "iv";
-    private final static String INITIAL_DATA = "[{\"name\": \"Example.com\", \"password\": \"MyPass1234\", \"additionalFields\": {\"login\": \"LoginExample\"}}]" ;
+    private final static String INITIAL_DATA = "[{\"name\": \"Example.com\", \"password\": \"MyPass1234\", \"additionalFields\": {\"login\": \"LoginExample\"}}," +
+            "{\"name\": \"Site.com\", \"password\": \"HardPass\", \"additionalFields\": {\"login\": \"someLogin\", \"email\": \"email@site.com\"}}]";
 
     private SharedPreferences preferences;
 

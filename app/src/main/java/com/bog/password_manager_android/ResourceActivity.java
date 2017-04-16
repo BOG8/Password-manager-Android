@@ -1,6 +1,7 @@
 package com.bog.password_manager_android;
 
 import android.content.SharedPreferences;
+import android.os.StrictMode;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -18,15 +19,13 @@ public class ResourceActivity extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        fillResources();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_resource);
-
-        fillResources();
 
         Fragment prevFragment = getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG);
         if (prevFragment == null) {
             ListFragment newFragment = new ListFragment();
-            newFragment.setClickListener(this);
             newFragment.setContent(resources);
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.fragment_container, newFragment);
@@ -55,5 +54,9 @@ public class ResourceActivity extends AppCompatActivity
         PasswordCipher cipher = PasswordCipher.getInstance();
         String clearData = cipher.decrypt(Converter.toByte(cipherData), Converter.toByte(iv));
         resources = PasswordsStringConvertor.deserialize(clearData);
+    }
+
+    public List<PasswordModel> getResourcesList() {
+        return resources;
     }
 }

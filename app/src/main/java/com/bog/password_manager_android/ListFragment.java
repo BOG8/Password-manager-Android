@@ -1,5 +1,6 @@
 package com.bog.password_manager_android;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
@@ -18,6 +19,7 @@ public class ListFragment extends Fragment
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     ListRecyclerViewAdapter.IResourceEntryClickListener onResourceEntryClickListener;
+    private ResourceActivity resourceActivity;
 
     public ListFragment() {
 
@@ -26,6 +28,14 @@ public class ListFragment extends Fragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mAdapter = new ListRecyclerViewAdapter(resourceActivity.getResourcesList(), this);
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        resourceActivity = (ResourceActivity) activity;
+        onResourceEntryClickListener = resourceActivity;
     }
 
     public void setContent(List<PasswordModel> passwords) {
@@ -33,10 +43,6 @@ public class ListFragment extends Fragment
         if (mRecyclerView != null) {
             mRecyclerView.swapAdapter(mAdapter, false);
         }
-    }
-
-    public void setClickListener(ListRecyclerViewAdapter.IResourceEntryClickListener listener) {
-        onResourceEntryClickListener = listener;
     }
 
     @Override
