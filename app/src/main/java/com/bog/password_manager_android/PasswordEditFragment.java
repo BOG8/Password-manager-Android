@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DividerItemDecoration;
@@ -163,9 +164,12 @@ public class PasswordEditFragment extends Fragment {
     private void onRemoveResourceClick() {
         if (resourceIndex != NEW_RESOURCE) {
             resourceActivity.getResourcesList().remove(resourceIndex);
+            resourceActivity.saveState();
+            getActivity().getSupportFragmentManager().popBackStack(0,
+                    FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        } else {
+            getFragmentManager().popBackStack();
         }
-        resourceActivity.saveState();
-        getFragmentManager().popBackStack();
     }
 
     private void onSaveResourceClick() {
