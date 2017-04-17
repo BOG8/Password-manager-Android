@@ -18,6 +18,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class NetworkManager {
+    private static final int NETWORK_ERROR = 0;
     private static final NetworkManager MANAGER = new NetworkManager();
     private final Executor executor = Executors.newCachedThreadPool();
     private final String REGISTRATION_URL =  "https://backend-password-manager.herokuapp.com/api/user/";
@@ -33,12 +34,18 @@ public class NetworkManager {
         void onDownLoaded(String cipherData, String iv, int resultCode);
     }
 
+    public interface UploadCallback {
+        void onUploaded(Integer resultCode);
+    }
+
+
     public static NetworkManager getInstance() {
         return MANAGER;
     }
 
     private RegistrationCallback registrationCallback;
     private DownloadCallback downloadCallback;
+    private UploadCallback uploadCallback;
 
     public void setRegistrationCallback(RegistrationCallback callback) {
         this.registrationCallback = callback;
@@ -48,6 +55,9 @@ public class NetworkManager {
         this.downloadCallback = callback;
     }
 
+    public void setUploadCallback(UploadCallback callback) {
+        this.uploadCallback = callback;
+    }
 
 
     public void registrate(final String body) {
@@ -82,13 +92,42 @@ public class NetworkManager {
                     DoubleStringStructure result = sendGetRequest(url);
                     notifyDownloadResult(result.cipherData, result.password, 200);
                 } catch (IOException e) {
-                    notifyDownloadResult(null, null, 0);
+                    notifyDownloadResult(null, null, NETWORK_ERROR);
                 }
             }
         });
     }
 
 
+    public void uploadData(final String username, final String password, final String cipherData, final String iv)  {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    String body = "{ \" username \" : \"" + username
+                            +  "\", \" password \" : \"" + password
+                            + "\",  \" data \" : \"" + cipherData
+                            + "\",  \" vector \" : \"" + iv
+                            + "\"}";
+                    Integer result = sendPostRequest(LOAD_DATA_URL, body);
+                    notifyUploadResult(result);
+                } catch (IOException e) {
+                    notifyUploadResult(NETWORK_ERROR);
+                }
+            }
+        });
+    }
+
+    private void notifyUploadResult(final Integer result) {
+        Ui.run(new Runnable() {
+            @Override
+            public void run() {
+                if (uploadCallback != null) {
+                    uploadCallback.onUploaded(result);
+                }
+            }
+        });
+    }
 
     private void notifyRegisrationResult(final Integer resultCode) {
         Ui.run(new Runnable() {

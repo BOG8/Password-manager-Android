@@ -126,6 +126,27 @@ public class ResourceActivity extends AppCompatActivity
         String cipherData = preferences.getString(CIPHER_DATA, null);
         String iv = preferences.getString(IV, null);
         // TODO: upload member "resources" to server
+        PasswordCipher cipher = PasswordCipher.getInstance();
+        String password = cipher.getPassword();
+        String username = "lenovo"; //testing
+
+        NetworkManager manager = NetworkManager.getInstance();
+        manager.setUploadCallback(new NetworkManager.UploadCallback() {
+            @Override
+            public void onUploaded(Integer resultCode) {
+                onDataUploaded(resultCode);
+            }
+        });
+
+        manager.uploadData(username, password, cipherData, iv);
+    }
+
+    public void onDataUploaded(Integer resultCode) {
+        if (resultCode != 200) {
+            Toast.makeText(this, "Ошибка загрузки данных " + resultCode, Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Данные загружены успешно ", Toast.LENGTH_SHORT).show();
+        }
     }
 
 }
