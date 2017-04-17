@@ -23,7 +23,7 @@ public class NetworkManager {
             = MediaType.parse("application/json; charset=utf-8");
 
     public interface Callback {
-        void onLoaded(String request, String value);
+        void onLoaded(Integer resultCode);
     }
 
     public static NetworkManager getInstance() {
@@ -41,38 +41,37 @@ public class NetworkManager {
         executor.execute(new Runnable() {
             @Override
             public void run() {
-                String result = "";
+                Integer resultCode;
                 try {
-                    result = sendPostRequest(REGISTRATION_URL, body);
+                    resultCode = sendPostRequest(REGISTRATION_URL, body);
                 } catch (IOException e) {
-                    result = null;
+                    resultCode = null;
                 }
-                notifyLoaded(REGISTRATION_URL, result);
+                notifyLoaded(resultCode);
             }
         });
     }
 
 
-    private void notifyLoaded(final String url, final String result) {
+    private void notifyLoaded(final Integer resultCode) {
         Ui.run(new Runnable() {
             @Override
             public void run() {
                 if (callback != null) {
-                    callback.onLoaded(url, result);
+                    callback.onLoaded(resultCode);
                 }
             }
         });
     }
 
 
-    public String sendPostRequest(String url, String json) throws IOException {
-
+    public Integer sendPostRequest(String url, String json) throws IOException {
         OkHttpClient client = new OkHttpClient();
 
         RequestBody body = RequestBody.create(JSON, json);
 
         Request request = new Request.Builder()
-              //  .addHeader("Content-type", "application/json")
+                .addHeader("Content-type", "application/json")
                 .url(url)
                 .post(body)
                 .build();
@@ -80,7 +79,7 @@ public class NetworkManager {
         Response response = client.newCall(request).execute();
 
         try {
-            return response.body().string();
+            return response.code();
         } finally {
             response.close();
         }

@@ -36,8 +36,8 @@ public class RegistrationActivity extends AppCompatActivity {
 
         manager.setCallback(new NetworkManager.Callback() {
             @Override
-            public void onLoaded(String key, String value) {
-                onTextLoaded(key, value);
+            public void onLoaded(Integer key) {
+                onTextLoaded(key);
             }
         });
 
@@ -45,13 +45,12 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
 
-    private void onTextLoaded(String url, String stringFromUrl) {
-
-
-        if (stringFromUrl == null) {
-            Toast.makeText(RegistrationActivity.this, "Ошибка регистрации" + stringFromUrl, Toast.LENGTH_SHORT).show();
+    private void onTextLoaded(Integer resultCode) {
+        if (resultCode != 200) {
+            Toast.makeText(RegistrationActivity.this, "Ошибка регистрации " + resultCode, Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(RegistrationActivity.this, "Регистрация прошла успешно ", Toast.LENGTH_SHORT).show();
         }
-        Toast.makeText(RegistrationActivity.this, "Регистрация прошла успешно " + stringFromUrl, Toast.LENGTH_SHORT).show();
     }
 
 }
