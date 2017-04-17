@@ -15,10 +15,12 @@ public class ResourceActivity extends AppCompatActivity
         implements ListRecyclerViewAdapter.IResourceEntryClickListener {
 
     private static String FRAGMENT_TAG = "some_tag";
+    SharedPreferences preferences;
     List<PasswordModel> resources;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        preferences = getSharedPreferences(PASSWORD_MANAGER, 0);
         fillResources();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_resource);
@@ -50,7 +52,6 @@ public class ResourceActivity extends AppCompatActivity
     }
 
     private void fillResources() {
-        SharedPreferences preferences = getSharedPreferences(PASSWORD_MANAGER, 0);
         String cipherData = preferences.getString(CIPHER_DATA, null);
         String iv = preferences.getString(IV, null);
         PasswordCipher cipher = PasswordCipher.getInstance();
@@ -85,7 +86,14 @@ public class ResourceActivity extends AppCompatActivity
     }
 
     public void saveState() {
-        // TODO: add save member "resources" to sharedPreferences/Server
+        String data = PasswordsStringConvertor.serialize(resources);
+        PasswordCipher cipher = PasswordCipher.getInstance();
+        cipher.encrypt(data);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(CIPHER_DATA, cipher.getCipherData());
+        editor.putString(IV, cipher.getIv());
+        editor.apply();
+        cipher.clearCipher();
     }
 
     public void onDownloadResourcesClick() {
@@ -115,6 +123,8 @@ public class ResourceActivity extends AppCompatActivity
     }
 
     public void onUploadResourcesClick() {
+        String cipherData = preferences.getString(CIPHER_DATA, null);
+        String iv = preferences.getString(IV, null);
         // TODO: upload member "resources" to server
     }
 
