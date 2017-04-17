@@ -24,7 +24,7 @@ public class RegistrationActivity extends AppCompatActivity {
                 if (login.length() > 3 && password.length() > 3) {//validate(login) && validate(password)) {
                     sendRegistrationRequest(login, password);
                 } else {
-                    Toast.makeText(RegistrationActivity.this, "Слишком слабый пароль", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegistrationActivity.this, R.string.validation_error, Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -47,9 +47,9 @@ public class RegistrationActivity extends AppCompatActivity {
 
     private void onTextLoaded(Integer resultCode) {
         if (resultCode != 200) {
-            Toast.makeText(RegistrationActivity.this, "Ошибка регистрации " + resultCode, Toast.LENGTH_SHORT).show();
+            Toast.makeText(RegistrationActivity.this, R.string.registration_error + resultCode, Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(RegistrationActivity.this, "Регистрация прошла успешно ", Toast.LENGTH_SHORT).show();
+            Toast.makeText(RegistrationActivity.this, R.string.registration_succes, Toast.LENGTH_SHORT).show();
         }
     }
 

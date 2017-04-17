@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Password manager</string>
+    <string name="add_field">Добавить поле</string>
+    <string name="add_resource">Добавить ресурс</string>
+    <string name="download">Скачать</string>
+    <string name="edit_resource">Редактировать ресурс</string>
+    <string name="empty_password">Пожалуйста, введите свой пароль</string>
+    <string name="enter">Вход</string>
+    <string name="hint_password">Пароль</string>
+    <string name="remove_resource">Удалить</string>
+    <string name="registration">Зарегистрироваться</string>
+    <string name="no_pass_text">Введите пароль. Это будет основной пароль для этого приложения.</string>
+    <string name="wrong_password">Неверный пароль</string>
+    <string name="upload">Отправить</string>
+    <string name="type_field_name">Выберите название поля</string>
+    <string name="save_resource">Сохранить</string>
+    <string name="hint_login">Логин</string>
+    <string name="submit">Подтвердить</string>
+    <string name="cancel">Отменить</string>
+    <string name="download_error">"Ошибка скачивания: "</string>
+    <string name="download_succes">Данные были успешно скачаны</string>
+    <string name="registration_error">"Ошибка регистрации: "</string>
+    <string name="registration_succes">Вы были успешно зарегистрированны</string>
+    <string name="upload_error">"Ошибка загрузки: "</string>
+    <string name="upload_succes">Данные были успешно загружены</string>
+    <string name="validation_error">Логин и пароль должны содержать не менее 4 символов</string>
+</resources>

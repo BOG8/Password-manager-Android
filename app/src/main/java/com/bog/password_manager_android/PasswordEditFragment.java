@@ -144,14 +144,14 @@ public class PasswordEditFragment extends Fragment {
                 .findViewById(R.id.editTextDialogUserInput);
         alertDialogBuilder
                 .setCancelable(false)
-                .setPositiveButton("OK",
+                .setPositiveButton(R.string.submit,
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog,int id) {
                                 currentPassword.additionalFields.put(userInput.getText().toString(), "");
                                 mAdapter.notifyDataSetChanged();
                             }
                         })
-                .setNegativeButton("Cancel",
+                .setNegativeButton(R.string.cancel,
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog,int id) {
                                 dialog.cancel();

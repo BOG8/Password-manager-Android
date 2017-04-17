@@ -119,9 +119,9 @@ public class ResourceActivity extends AppCompatActivity
             editor.putString(CIPHER_DATA, cipherData);
             editor.putString(IV, iv);
             editor.apply();
-            Toast.makeText(this, "Данные скачаны успешно ", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.download_succes, Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(this, "Ошибка cкачивания данных " + resultCode, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.download_error + resultCode, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -146,9 +146,9 @@ public class ResourceActivity extends AppCompatActivity
 
     public void onDataUploaded(Integer resultCode) {
         if (resultCode != 200) {
-            Toast.makeText(this, "Ошибка загрузки данных " + resultCode, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.upload_error + resultCode, Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(this, "Данные загружены успешно ", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.upload_succes, Toast.LENGTH_SHORT).show();
         }
     }
 
