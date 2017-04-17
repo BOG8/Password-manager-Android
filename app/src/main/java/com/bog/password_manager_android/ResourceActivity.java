@@ -114,11 +114,14 @@ public class ResourceActivity extends AppCompatActivity
     }
 
     private void onDataLoaded(String cipherData, String iv, int resultCode) {
-        // TODO сохранить данные просто Олег
-        if (resultCode != 200) {
-            Toast.makeText(this, "Ошибка cкачивания данных " + resultCode, Toast.LENGTH_SHORT).show();
-        } else {
+        if (resultCode == 200) {
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putString(CIPHER_DATA, cipherData);
+            editor.putString(IV, iv);
+            editor.apply();
             Toast.makeText(this, "Данные скачаны успешно ", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Ошибка cкачивания данных " + resultCode, Toast.LENGTH_SHORT).show();
         }
     }
 
