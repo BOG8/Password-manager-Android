@@ -34,7 +34,7 @@ public class RegistrationActivity extends AppCompatActivity {
     private void sendRegistrationRequest(String password, String login) {
         NetworkManager manager = NetworkManager.getInstance();
 
-        manager.setCallback(new NetworkManager.Callback() {
+        manager.setRegistrationCallback(new NetworkManager.RegistrationCallback() {
             @Override
             public void onLoaded(Integer key) {
                 onTextLoaded(key);

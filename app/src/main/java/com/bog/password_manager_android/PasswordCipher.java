@@ -89,4 +89,8 @@ class PasswordCipher {
         iv = null;
         cipherData = null;
     }
+
+    public String getPassword() {
+        return password;
+    }
 }

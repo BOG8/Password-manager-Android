@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -88,7 +89,29 @@ public class ResourceActivity extends AppCompatActivity
     }
 
     public void onDownloadResourcesClick() {
-        // TODO: download to member "resources" from server
+        NetworkManager manager = NetworkManager.getInstance();
+
+        manager.setDownloadCallback(new NetworkManager.DownloadCallback() {
+            @Override
+            public void onDownLoaded(String cipherData, String iv, int resultCode) {
+                onDataLoaded(cipherData, iv, resultCode);
+            }
+        });
+
+        PasswordCipher cipher = PasswordCipher.getInstance();
+        String password = cipher.getPassword();
+        String username = "lenovo"; //testing
+
+        manager.downloadData(username, password);
+    }
+
+    private void onDataLoaded(String cipherData, String iv, int resultCode) {
+        // TODO сохранить данные просто Олег
+        if (resultCode != 200) {
+            Toast.makeText(this, "Ошибка cкачивания данных " + resultCode, Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Данные скачаны успешно ", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void onUploadResourcesClick() {
