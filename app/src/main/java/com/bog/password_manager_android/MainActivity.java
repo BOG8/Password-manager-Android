@@ -28,7 +28,8 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.entering_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String password = ((EditText) findViewById(R.id.password_edit_text)).getText().toString();
+                EditText EditPass = (EditText) findViewById(R.id.password_edit_text);
+                String password = EditPass.getText().toString();
                 if (!password.isEmpty()) {
                     PasswordCipher cipher = PasswordCipher.getInstance();
                     cipher.setPassword(password);
@@ -37,12 +38,14 @@ public class MainActivity extends AppCompatActivity {
                         String iv = preferences.getString(IV, null);
                         String clearData = cipher.decrypt(Converter.toByte(cipherData), Converter.toByte(iv));
                         if (clearData != null) {
+                            EditPass.setText(null);
                             startActivity(new Intent(MainActivity.this, ResourceActivity.class));
                         } else {
                             Toast.makeText(MainActivity.this, R.string.wrong_password, Toast.LENGTH_SHORT).show();
                         }
                     } else {
                         initializeData(cipher);
+                        EditPass.setText(null);
                         startActivity(new Intent(MainActivity.this, ResourceActivity.class));
                     }
                 } else {
