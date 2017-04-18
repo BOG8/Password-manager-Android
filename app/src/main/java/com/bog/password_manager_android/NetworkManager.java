@@ -89,8 +89,13 @@ public class NetworkManager {
             public void run() {
                 try {
                     String url = LOAD_DATA_URL + "?username=" + username  + "&password" + password;
-                    DoubleStringStructure result = sendGetRequest(url);
-                    notifyDownloadResult(result.cipherData, result.password, 200);
+                    Response response = sendGetRequest(url);
+                    if (response.code() != 200) {
+                        notifyDownloadResult(null, null, NETWORK_ERROR);
+                    } else {
+                        DoubleStringStructure result = new GsonBuilder().create().fromJson(response.body().string(), DoubleStringStructure.class);
+                        notifyDownloadResult(result.cipherData, result.password, 200);
+                    }
                 } catch (IOException e) {
                     notifyDownloadResult(null, null, NETWORK_ERROR);
                 }
@@ -149,7 +154,7 @@ public class NetworkManager {
         });
     }
 
-    private DoubleStringStructure sendGetRequest(String url) throws IOException {
+    private Response sendGetRequest(String url) throws IOException {
         OkHttpClient client = new OkHttpClient();
 
         Request request = new Request.Builder()
@@ -157,8 +162,7 @@ public class NetworkManager {
                 .build();
 
         Response response = client.newCall(request).execute();
-        String responseStr =  response.body().string();
-        return new GsonBuilder().create().fromJson(responseStr, DoubleStringStructure.class);
+        return response;
     }
 
     public Integer sendPostRequest(String url, String json) throws IOException {
