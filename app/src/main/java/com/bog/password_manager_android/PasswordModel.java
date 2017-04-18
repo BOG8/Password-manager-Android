@@ -1,8 +1,6 @@
 package com.bog.password_manager_android;
 
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.TreeMap;
 
 /**

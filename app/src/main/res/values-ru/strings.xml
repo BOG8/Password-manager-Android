@@ -23,7 +23,7 @@
     <string name="registration_succes">Вы были успешно зарегистрированны</string>
     <string name="upload_error">"Ошибка загрузки: "</string>
     <string name="upload_succes">Данные были успешно загружены</string>
-    <string name="validation_error">Логин и пароль должны содержать не менее 4 символов</string>
+    <string name="validation_error">Логин и пароль должны содержать не менее 1 символа</string>
     <string name="input_field_name">Введите название поля</string>
     <string name="input_login">Введите ваш логин</string>
 </resources>

@@ -17,11 +17,10 @@ public class RegistrationActivity extends AppCompatActivity {
         findViewById(R.id.registration_btn_submit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
-                // валидируем данные и посылаем запрос
                 String password = ((EditText) findViewById(R.id.registration_password)).getText().toString();
                 String login = ((EditText) findViewById(R.id.registration_login)).getText().toString();
 
-                if (login.length() > 3 && password.length() > 3) {//validate(login) && validate(password)) {
+                if (!login.isEmpty() && !password.isEmpty()) {
                     sendRegistrationRequest(login, password);
                 } else {
                     Toast.makeText(RegistrationActivity.this, R.string.validation_error, Toast.LENGTH_SHORT).show();

@@ -45,7 +45,6 @@ public class ResourceActivity extends AppCompatActivity
 
     @Override
     public void onResourceEntryClick(int index) {
-//        PasswordEditFragment newFragment = new PasswordEditFragment();
         PasswordFragment newFragment = new PasswordFragment();
         Bundle args = new Bundle();
         args.putInt(PasswordFragment.RESOURCE_INDEX, index);

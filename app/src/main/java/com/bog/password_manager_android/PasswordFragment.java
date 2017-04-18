@@ -31,7 +31,6 @@ public class PasswordFragment extends Fragment {
         } else {
             setContent(null);
         }
-        //setRetainInstance(true);
     }
 
     @Override
