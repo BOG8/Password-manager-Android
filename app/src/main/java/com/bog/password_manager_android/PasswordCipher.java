@@ -19,7 +19,7 @@ import javax.crypto.spec.SecretKeySpec;
 class PasswordCipher {
     private final static String LOG_TAG = PasswordCipher.class.getSimpleName();
     private final static int SIZE = 16;
-    private final static int ITERATION_COUNT = 10000;
+    private final static int ITERATION_COUNT = 1000;
     private final static int KEY_LENGTH = 256;
 
     private static PasswordCipher instance;
