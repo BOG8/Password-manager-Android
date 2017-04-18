@@ -1,17 +1,15 @@
 package com.bog.password_manager_android;
 
 
-import org.json.JSONObject;
-
 import java.io.IOException;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-import com.bog.password_manager_android.models.UploadData;
+import com.bog.password_manager_android.models.RegistrationModel;
+import com.bog.password_manager_android.models.UserModel;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import java.io.IOException;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -62,12 +60,15 @@ public class NetworkManager {
     }
 
 
-    public void registrate(final String body) {
+    public void registrate(final String username, final String password) {
         executor.execute(new Runnable() {
             @Override
             public void run() {
                 Integer resultCode;
                 try {
+                    RegistrationModel model = new RegistrationModel(username, password);
+                    Gson gson = new Gson();
+                    String body = gson.toJson(model);
                     resultCode = sendPostRequest(REGISTRATION_URL, body);
                 } catch (IOException e) {
                     resultCode = NETWORK_ERROR;
@@ -103,7 +104,7 @@ public class NetworkManager {
             @Override
             public void run() {
                 try {
-                    UploadData data = new UploadData(username, password, cipherData, iv);
+                    UserModel data = new UserModel(username, password, cipherData, iv);
                     Gson gson = new Gson();
                     String body = gson.toJson(data);
                     Integer result = sendPostRequest(LOAD_DATA_URL, body);

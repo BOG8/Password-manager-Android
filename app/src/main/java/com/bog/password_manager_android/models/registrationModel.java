@@ -1,8 +1,11 @@
 package com.bog.password_manager_android.models;
 
-/**
- * Created by ovv on 18.04.2017.
- */
+public class RegistrationModel {
+    String username;
+    String password;
 
-public class registrationModel {
+    public RegistrationModel(String username_, String password_) {
+        this.username = username_;
+        this.password = password_;
+    }
 }

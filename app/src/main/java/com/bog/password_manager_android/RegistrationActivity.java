@@ -41,13 +41,13 @@ public class RegistrationActivity extends AppCompatActivity {
             }
         });
 
-        manager.registrate("{ \"username\":\"" + login +  "\", \"password\":\"" + password + "\"}");
+        manager.registrate(login, password);
     }
 
 
     private void onTextLoaded(Integer resultCode) {
         if (resultCode != NetworkManager.NETWORK_SUCCES) {
-            Toast.makeText(RegistrationActivity.this, R.string.registration_error + resultCode, Toast.LENGTH_SHORT).show();
+            Toast.makeText(RegistrationActivity.this, getString(R.string.registration_error) + resultCode, Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(RegistrationActivity.this, R.string.registration_succes, Toast.LENGTH_SHORT).show();
         }
