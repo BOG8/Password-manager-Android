@@ -79,8 +79,8 @@ public class NetworkManager {
     }
 
     private class DoubleStringStructure {
-        public String cipherData;
-        public String password;
+        public String data;
+        public String vector;
 
         public DoubleStringStructure() {
         }
@@ -96,11 +96,11 @@ public class NetworkManager {
                     if (response.code() != 200) {
                         notifyDownloadResult(null, null, response.code());
                     } else {
-                        //String str = response.body().string();
                         GsonBuilder builder = new GsonBuilder();
                         Gson gson = builder.create();
-                        DoubleStringStructure result = gson.fromJson(response.body().string(), DoubleStringStructure.class);
-                        notifyDownloadResult(result.cipherData, result.password, 200);
+                        String jsonStr = response.body().string();
+                        DoubleStringStructure result = gson.fromJson(jsonStr, DoubleStringStructure.class);
+                        notifyDownloadResult(result.data, result.vector, 200);
                     }
                 } catch (Exception e) {
                     notifyDownloadResult(null, null, NETWORK_ERROR);
