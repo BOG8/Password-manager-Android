@@ -143,6 +143,14 @@ public class ResourceActivity extends AppCompatActivity
             editor.putString(CIPHER_DATA, cipherData);
             editor.putString(IV, iv);
             editor.apply();
+            fillResources();
+
+            // update
+            ListFragment newFragment = new ListFragment();
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.fragment_container, newFragment, FRAGMENT_TAG);
+            transaction.commit();
+
             Toast.makeText(this, R.string.download_succes, Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(this, getString(R.string.download_error) + resultCode, Toast.LENGTH_SHORT).show();

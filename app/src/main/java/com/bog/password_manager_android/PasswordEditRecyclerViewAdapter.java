@@ -73,7 +73,7 @@ public class PasswordEditRecyclerViewAdapter
         } else if (position == 1) {
             holder.mTextViewName.setText("password");
             holder.mTextViewValue.setText(currentPassword.password);
-            holder.mButtonRemove.setVisibility(View.INVISIBLE);
+            holder.mButtonRemove.setVisibility(View.VISIBLE);
         }
         else {
             String key = (String) currentPassword.additionalFields.keySet().toArray()[position-2];
@@ -93,9 +93,14 @@ public class PasswordEditRecyclerViewAdapter
     }
 
     public void onFieldRemove(int index) {
-        String key = (String) currentPassword.additionalFields.keySet().toArray()[index-2];
-        currentPassword.additionalFields.remove(key);
-        notifyDataSetChanged();
+        if (index == 1) {
+            //generate password currentPassword.password
+            notifyDataSetChanged();
+        } else {
+            String key = (String) currentPassword.additionalFields.keySet().toArray()[index - 2];
+            currentPassword.additionalFields.remove(key);
+            notifyDataSetChanged();
+        }
     }
 
     public void onFieldChange(int index, String value) {
