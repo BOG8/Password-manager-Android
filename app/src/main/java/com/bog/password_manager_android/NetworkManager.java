@@ -81,6 +81,9 @@ public class NetworkManager {
     private class DoubleStringStructure {
         public String cipherData;
         public String password;
+
+        public DoubleStringStructure() {
+        }
     }
 
     public void downloadData(final String username, final String password) {
@@ -91,12 +94,15 @@ public class NetworkManager {
                     String url = LOAD_DATA_URL + "?username=" + username  + "&password=" + password;
                     Response response = sendGetRequest(url);
                     if (response.code() != 200) {
-                        notifyDownloadResult(null, null, NETWORK_ERROR);
+                        notifyDownloadResult(null, null, response.code());
                     } else {
-                        DoubleStringStructure result = new GsonBuilder().create().fromJson(response.body().string(), DoubleStringStructure.class);
+                        //String str = response.body().string();
+                        GsonBuilder builder = new GsonBuilder();
+                        Gson gson = builder.create();
+                        DoubleStringStructure result = gson.fromJson(response.body().string(), DoubleStringStructure.class);
                         notifyDownloadResult(result.cipherData, result.password, 200);
                     }
-                } catch (IOException e) {
+                } catch (Exception e) {
                     notifyDownloadResult(null, null, NETWORK_ERROR);
                 }
             }
