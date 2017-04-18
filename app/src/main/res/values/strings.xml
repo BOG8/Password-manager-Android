@@ -11,7 +11,8 @@
     <string name="empty_password">Please, enter your password</string>
     <string name="add_field">Add field</string>
     <string name="remove_resource">Remove</string>
-    <string name="type_field_name">Type field name</string>
+    <string name="input_field_name">Input field name</string>
+    <string name="input_login">Input your login</string>
     <string name="save_resource">Save</string>
     <string name="add_resource">Add resource</string>
     <string name="download">Download</string>

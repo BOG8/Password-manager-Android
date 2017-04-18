@@ -1,10 +1,15 @@
 package com.bog.password_manager_android;
 
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import java.util.List;
@@ -97,20 +102,39 @@ public class ResourceActivity extends AppCompatActivity
     }
 
     public void onDownloadResourcesClick() {
-        NetworkManager manager = NetworkManager.getInstance();
+        View promptsView = LayoutInflater.from(this).inflate(R.layout.input_username_layout, null);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setView(promptsView);
+        final EditText userInput = (EditText) promptsView.findViewById(R.id.editTextDialogUserInput);
+        alertDialogBuilder
+                .setCancelable(false)
+                .setPositiveButton(R.string.submit,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                NetworkManager manager = NetworkManager.getInstance();
+                                manager.setDownloadCallback(new NetworkManager.DownloadCallback() {
+                                    @Override
+                                    public void onDownLoaded(String cipherData, String iv, int resultCode) {
+                                        onDataLoaded(cipherData, iv, resultCode);
+                                    }
+                                });
 
-        manager.setDownloadCallback(new NetworkManager.DownloadCallback() {
-            @Override
-            public void onDownLoaded(String cipherData, String iv, int resultCode) {
-                onDataLoaded(cipherData, iv, resultCode);
-            }
-        });
-
-        PasswordCipher cipher = PasswordCipher.getInstance();
-        String password = cipher.getPassword();
-        String username = "lenovo"; //testing
-
-        manager.downloadData(username, password);
+                                PasswordCipher cipher = PasswordCipher.getInstance();
+                                String password = cipher.getPassword();
+                                String username = userInput.getText().toString();
+                                manager.downloadData(username, password);
+                            }
+                        }
+                )
+                .setNegativeButton(R.string.cancel,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,int id) {
+                                dialog.cancel();
+                            }
+                        }
+                );
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 
     private void onDataLoaded(String cipherData, String iv, int resultCode) {
@@ -126,21 +150,41 @@ public class ResourceActivity extends AppCompatActivity
     }
 
     public void onUploadResourcesClick() {
-        String cipherData = preferences.getString(CIPHER_DATA, null);
-        String iv = preferences.getString(IV, null);
-        // TODO: upload member "resources" to server
-        PasswordCipher cipher = PasswordCipher.getInstance();
-        String password = cipher.getPassword();
-        String username = "fizkek"; //testing
+        View promptsView = LayoutInflater.from(this).inflate(R.layout.input_username_layout, null);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setView(promptsView);
+        final EditText userInput = (EditText) promptsView.findViewById(R.id.editTextDialogUserInput);
+        alertDialogBuilder
+                .setCancelable(false)
+                .setPositiveButton(R.string.submit,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                NetworkManager manager = NetworkManager.getInstance();
+                                manager.setUploadCallback(new NetworkManager.UploadCallback() {
+                                    @Override
+                                    public void onUploaded(Integer resultCode) {
+                                        onDataUploaded(resultCode);
+                                    }
+                                });
 
-        NetworkManager manager = NetworkManager.getInstance();
-        manager.setUploadCallback(new NetworkManager.UploadCallback() {
-            @Override
-            public void onUploaded(Integer resultCode) {
-                onDataUploaded(resultCode);
-            }
-        });
-        manager.uploadData(username, password, cipherData, iv);
+                                String cipherData = preferences.getString(CIPHER_DATA, null);
+                                String iv = preferences.getString(IV, null);
+                                PasswordCipher cipher = PasswordCipher.getInstance();
+                                String password = cipher.getPassword();
+                                String username = userInput.getText().toString();
+                                manager.uploadData(username, password, cipherData, iv);
+                            }
+                        }
+                )
+                .setNegativeButton(R.string.cancel,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,int id) {
+                                dialog.cancel();
+                            }
+                        }
+                );
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 
     public void onDataUploaded(Integer resultCode) {

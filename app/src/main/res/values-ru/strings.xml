@@ -13,7 +13,6 @@
     <string name="no_pass_text">Введите пароль. Это будет основной пароль для этого приложения.</string>
     <string name="wrong_password">Неверный пароль</string>
     <string name="upload">Отправить</string>
-    <string name="type_field_name">Выберите название поля</string>
     <string name="save_resource">Сохранить</string>
     <string name="hint_login">Логин</string>
     <string name="submit">Подтвердить</string>
@@ -25,4 +24,6 @@
     <string name="upload_error">"Ошибка загрузки: "</string>
     <string name="upload_succes">Данные были успешно загружены</string>
     <string name="validation_error">Логин и пароль должны содержать не менее 4 символов</string>
+    <string name="input_field_name">Введите название поля</string>
+    <string name="input_login">Введите ваш логин</string>
 </resources>
