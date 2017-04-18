@@ -121,7 +121,7 @@ public class ResourceActivity extends AppCompatActivity
             editor.apply();
             Toast.makeText(this, R.string.download_succes, Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(this, R.string.download_error + resultCode, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.download_error) + resultCode, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -146,7 +146,7 @@ public class ResourceActivity extends AppCompatActivity
 
     public void onDataUploaded(Integer resultCode) {
         if (resultCode != 200) {
-            Toast.makeText(this, R.string.upload_error + resultCode, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.upload_error) + resultCode, Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(this, R.string.upload_succes, Toast.LENGTH_SHORT).show();
         }
