@@ -88,7 +88,7 @@ public class NetworkManager {
             @Override
             public void run() {
                 try {
-                    String url = LOAD_DATA_URL + "?username=" + username  + "&password" + password;
+                    String url = LOAD_DATA_URL + "?username=" + username  + "&password=" + password;
                     Response response = sendGetRequest(url);
                     if (response.code() != 200) {
                         notifyDownloadResult(null, null, NETWORK_ERROR);
