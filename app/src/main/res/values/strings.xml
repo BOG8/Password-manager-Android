@@ -19,7 +19,7 @@
     <string name="edit_resource">Edit resource</string>
     <string name="validation_error">Login and password must contain at least 4 characters</string>
     <string name="registration_succes">You was successfully registered</string>
-    <string name="registration_error">Registration error: </string>
+    <string name="registration_error">"Registration error: "</string>
     <string name="download_succes">Data was successfully downloaded</string>
     <string name="download_error">Download error: </string>
     <string name="upload_succes">Data was successfully uploaded</string>

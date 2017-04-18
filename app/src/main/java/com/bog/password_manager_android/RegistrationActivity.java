@@ -31,7 +31,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
     }
 
-    private void sendRegistrationRequest(String password, String login) {
+    private void sendRegistrationRequest(String login, String password) {
         NetworkManager manager = NetworkManager.getInstance();
 
         manager.setRegistrationCallback(new NetworkManager.RegistrationCallback() {
@@ -46,7 +46,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
 
     private void onTextLoaded(Integer resultCode) {
-        if (resultCode != 200) {
+        if (resultCode != NetworkManager.NETWORK_SUCCES) {
             Toast.makeText(RegistrationActivity.this, R.string.registration_error + resultCode, Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(RegistrationActivity.this, R.string.registration_succes, Toast.LENGTH_SHORT).show();

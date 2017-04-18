@@ -131,7 +131,7 @@ public class ResourceActivity extends AppCompatActivity
         // TODO: upload member "resources" to server
         PasswordCipher cipher = PasswordCipher.getInstance();
         String password = cipher.getPassword();
-        String username = "lenovo"; //testing
+        String username = "fizkek"; //testing
 
         NetworkManager manager = NetworkManager.getInstance();
         manager.setUploadCallback(new NetworkManager.UploadCallback() {
@@ -140,7 +140,6 @@ public class ResourceActivity extends AppCompatActivity
                 onDataUploaded(resultCode);
             }
         });
-
         manager.uploadData(username, password, cipherData, iv);
     }
 

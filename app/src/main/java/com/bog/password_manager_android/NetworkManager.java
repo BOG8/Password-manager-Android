@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
+import com.bog.password_manager_android.models.UploadData;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -18,7 +19,8 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class NetworkManager {
-    private static final int NETWORK_ERROR = 0;
+    public static final int NETWORK_ERROR = 0;
+    public static final int NETWORK_SUCCES = 200;
     private static final NetworkManager MANAGER = new NetworkManager();
     private final Executor executor = Executors.newCachedThreadPool();
     private final String REGISTRATION_URL =  "https://backend-password-manager.herokuapp.com/api/user/";
@@ -68,7 +70,7 @@ public class NetworkManager {
                 try {
                     resultCode = sendPostRequest(REGISTRATION_URL, body);
                 } catch (IOException e) {
-                    resultCode = null;
+                    resultCode = NETWORK_ERROR;
                 }
                 notifyRegisrationResult(resultCode);
             }
@@ -84,9 +86,6 @@ public class NetworkManager {
         executor.execute(new Runnable() {
             @Override
             public void run() {
-                String cipherData;
-                String iv;
-
                 try {
                     String url = LOAD_DATA_URL + "?username=" + username  + "&password" + password;
                     DoubleStringStructure result = sendGetRequest(url);
@@ -104,11 +103,9 @@ public class NetworkManager {
             @Override
             public void run() {
                 try {
-                    String body = "{ \" username \" : \"" + username
-                            +  "\", \" password \" : \"" + password
-                            + "\",  \" data \" : \"" + cipherData
-                            + "\",  \" vector \" : \"" + iv
-                            + "\"}";
+                    UploadData data = new UploadData(username, password, cipherData, iv);
+                    Gson gson = new Gson();
+                    String body = gson.toJson(data);
                     Integer result = sendPostRequest(LOAD_DATA_URL, body);
                     notifyUploadResult(result);
                 } catch (IOException e) {
@@ -159,12 +156,8 @@ public class NetworkManager {
                 .build();
 
         Response response = client.newCall(request).execute();
-        try {
-            String responseStr =  response.body().string();
-            return new GsonBuilder().create().fromJson(responseStr, DoubleStringStructure.class);
-        } catch (IOException e) {
-            return null;
-        }
+        String responseStr =  response.body().string();
+        return new GsonBuilder().create().fromJson(responseStr, DoubleStringStructure.class);
     }
 
     public Integer sendPostRequest(String url, String json) throws IOException {
