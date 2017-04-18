@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 public class PasswordEditRecyclerViewAdapter
         extends RecyclerView.Adapter<PasswordEditRecyclerViewAdapter.ViewHolder> {
+    private final static int PASSWORD_SIZE = 10;
     private PasswordModel currentPassword;
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -94,7 +95,7 @@ public class PasswordEditRecyclerViewAdapter
 
     public void onFieldRemove(int index) {
         if (index == 1) {
-            //generate password currentPassword.password
+            currentPassword.password = new PasswordGenerator().generatePassword(PASSWORD_SIZE);
             notifyDataSetChanged();
         } else {
             String key = (String) currentPassword.additionalFields.keySet().toArray()[index - 2];
