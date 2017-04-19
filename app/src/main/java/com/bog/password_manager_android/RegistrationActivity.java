@@ -13,7 +13,6 @@ public class RegistrationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
 
-
         findViewById(R.id.registration_btn_submit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
@@ -32,14 +31,12 @@ public class RegistrationActivity extends AppCompatActivity {
 
     private void sendRegistrationRequest(String login, String password) {
         NetworkManager manager = NetworkManager.getInstance();
-
         manager.setRegistrationCallback(new NetworkManager.RegistrationCallback() {
             @Override
             public void onLoaded(Integer key) {
                 onTextLoaded(key);
             }
         });
-
         manager.registrate(login, password);
     }
 

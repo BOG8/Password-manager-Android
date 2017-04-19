@@ -17,25 +17,25 @@ import java.util.Map;
  */
 
 public class PasswordRecyclerViewAdapter extends RecyclerView.Adapter<PasswordRecyclerViewAdapter.ViewHolder> {
-    private List<Pair<String, String>> mDataset;
+    private List<Pair<String, String>> dataSet;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView mTextViewName;
-        public TextView mTextViewValue;
+        public TextView textViewName;
+        public TextView textViewValue;
         public ViewHolder(LinearLayout v) {
             super(v);
-            mTextViewName = (TextView)v.findViewById(R.id.fieldName);
-            mTextViewValue = (TextView)v.findViewById(R.id.fieldValue);
+            textViewName = (TextView)v.findViewById(R.id.fieldName);
+            textViewValue = (TextView)v.findViewById(R.id.fieldValue);
         }
     }
 
     public PasswordRecyclerViewAdapter(PasswordModel password) {
-        mDataset = new ArrayList<>();
+        dataSet = new ArrayList<>();
         if (password != null) {
-            mDataset.add(Pair.create("name", password.name));
-            mDataset.add(Pair.create("password", password.password));
+            dataSet.add(Pair.create("name", password.name));
+            dataSet.add(Pair.create("password", password.password));
             for (Map.Entry<String, String> e : password.additionalFields.entrySet()) {
-                mDataset.add(Pair.create(e.getKey(), e.getValue()));
+                dataSet.add(Pair.create(e.getKey(), e.getValue()));
             }
         }
     }
@@ -50,12 +50,12 @@ public class PasswordRecyclerViewAdapter extends RecyclerView.Adapter<PasswordRe
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.mTextViewName.setText(mDataset.get(position).first);
-        holder.mTextViewValue.setText(mDataset.get(position).second);
+        holder.textViewName.setText(dataSet.get(position).first);
+        holder.textViewValue.setText(dataSet.get(position).second);
     }
 
     @Override
     public int getItemCount() {
-        return mDataset.size();
+        return dataSet.size();
     }
 }

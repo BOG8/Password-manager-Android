@@ -17,20 +17,20 @@ public class PasswordEditRecyclerViewAdapter
     private PasswordModel currentPassword;
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        public TextView mTextViewName;
-        public EditText mTextViewValue;
-        public Button mButtonRemove;
+        public TextView textViewName;
+        public EditText textViewValue;
+        public Button buttonRemove;
         public int fieldIndex;
         private PasswordEditRecyclerViewAdapter mlistener;
         public ViewHolder(LinearLayout v, int index, PasswordEditRecyclerViewAdapter listener) {
             super(v);
             fieldIndex = index;
             mlistener = listener;
-            mTextViewName = (TextView)v.findViewById(R.id.fieldEditName);
-            mTextViewValue = (EditText)v.findViewById(R.id.fieldEditValue);
-            mButtonRemove = (Button) v.findViewById(R.id.fieldEditRemove);
-            mButtonRemove.setOnClickListener(this);
-            mTextViewValue.addTextChangedListener(new TextWatcher() {
+            textViewName = (TextView)v.findViewById(R.id.fieldEditName);
+            textViewValue = (EditText)v.findViewById(R.id.fieldEditValue);
+            buttonRemove = (Button) v.findViewById(R.id.fieldEditRemove);
+            buttonRemove.setOnClickListener(this);
+            textViewValue.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 }
@@ -68,19 +68,19 @@ public class PasswordEditRecyclerViewAdapter
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.fieldIndex = position;
         if (position == 0) {
-            holder.mTextViewName.setText("name");
-            holder.mTextViewValue.setText(currentPassword.name);
-            holder.mButtonRemove.setVisibility(View.INVISIBLE);
+            holder.textViewName.setText("name");
+            holder.textViewValue.setText(currentPassword.name);
+            holder.buttonRemove.setVisibility(View.INVISIBLE);
         } else if (position == 1) {
-            holder.mTextViewName.setText("password");
-            holder.mTextViewValue.setText(currentPassword.password);
-            holder.mButtonRemove.setVisibility(View.VISIBLE);
+            holder.textViewName.setText("password");
+            holder.textViewValue.setText(currentPassword.password);
+            holder.buttonRemove.setVisibility(View.VISIBLE);
         }
         else {
             String key = (String) currentPassword.additionalFields.keySet().toArray()[position-2];
-            holder.mTextViewName.setText(key);
-            holder.mTextViewValue.setText(currentPassword.additionalFields.get(key));
-            holder.mButtonRemove.setVisibility(View.VISIBLE);
+            holder.textViewName.setText(key);
+            holder.textViewValue.setText(currentPassword.additionalFields.get(key));
+            holder.buttonRemove.setVisibility(View.VISIBLE);
         }
     }
 

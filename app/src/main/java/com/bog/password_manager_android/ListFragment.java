@@ -17,9 +17,9 @@ import java.util.List;
 
 public class ListFragment extends Fragment
         implements ListRecyclerViewAdapter.IResourceEntryClickListener {
-    private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
-    ListRecyclerViewAdapter.IResourceEntryClickListener onResourceEntryClickListener;
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter adapter;
+    private ListRecyclerViewAdapter.IResourceEntryClickListener onResourceEntryClickListener;
     private ResourceActivity resourceActivity;
 
     public ListFragment() {
@@ -29,7 +29,7 @@ public class ListFragment extends Fragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mAdapter = new ListRecyclerViewAdapter(resourceActivity.getResourcesList(), this);
+        adapter = new ListRecyclerViewAdapter(resourceActivity.getResourcesList(), this);
     }
 
     @Override
@@ -40,9 +40,9 @@ public class ListFragment extends Fragment
     }
 
     public void setContent(List<PasswordModel> passwords) {
-        mAdapter = new ListRecyclerViewAdapter(passwords, this);
-        if (mRecyclerView != null) {
-            mRecyclerView.swapAdapter(mAdapter, false);
+        adapter = new ListRecyclerViewAdapter(passwords, this);
+        if (recyclerView != null) {
+            recyclerView.swapAdapter(adapter, false);
         }
     }
 
@@ -50,15 +50,15 @@ public class ListFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list, container, false);
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.passwordsList);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView = (RecyclerView) view.findViewById(R.id.passwordsList);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(
-                mRecyclerView.getContext(), DividerItemDecoration.VERTICAL);
-        mRecyclerView.addItemDecoration(dividerItemDecoration);
+                recyclerView.getContext(), DividerItemDecoration.VERTICAL);
+        recyclerView.addItemDecoration(dividerItemDecoration);
 
-        if (mAdapter != null) {
-            mRecyclerView.swapAdapter(mAdapter, false);
+        if (adapter != null) {
+            recyclerView.swapAdapter(adapter, false);
         } else {
             setContent(new ArrayList<PasswordModel>());
         }

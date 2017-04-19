@@ -8,11 +8,12 @@ import java.security.SecureRandom;
 
 class PasswordGenerator {
     private final String str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    private static final SecureRandom secureRandom = new SecureRandom();
 
     String generatePassword(int numberOfChars) {
         StringBuilder password = new StringBuilder();
         for (int i = 0; i < numberOfChars; i++) {
-            int index = new SecureRandom().nextInt(62);
+            int index = secureRandom.nextInt(62);
             password.append(str.charAt(index));
         }
         return password.toString();

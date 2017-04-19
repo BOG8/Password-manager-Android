@@ -23,8 +23,7 @@ public class NetworkManager {
     private final Executor executor = Executors.newCachedThreadPool();
     private final String REGISTRATION_URL =  "https://backend-password-manager.herokuapp.com/api/user/";
     private final String LOAD_DATA_URL = "https://backend-password-manager.herokuapp.com/api/data/";
-    public static final MediaType JSON
-            = MediaType.parse("application/json; charset=utf-8");
+    public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
     public interface RegistrationCallback {
         void onLoaded(Integer resultCode);
@@ -100,7 +99,7 @@ public class NetworkManager {
                         Gson gson = builder.create();
                         String jsonStr = response.body().string();
                         DoubleStringStructure result = gson.fromJson(jsonStr, DoubleStringStructure.class);
-                        notifyDownloadResult(result.data, result.vector, 200);
+                        notifyDownloadResult(result.data, result.vector, NETWORK_SUCCES);
                     }
                 } catch (Exception e) {
                     notifyDownloadResult(null, null, NETWORK_ERROR);

@@ -14,16 +14,16 @@ import java.util.List;
  */
 
 public class ListRecyclerViewAdapter extends RecyclerView.Adapter<ListRecyclerViewAdapter.ViewHolder> {
-    private List<PasswordModel> mDataset;
+    private List<PasswordModel> dataSet;
     private IResourceEntryClickListener onClickListener;
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        public TextView mTextView;
+        public TextView textView;
         private int resourceIndex;
         IResourceEntryClickListener onClickListener;
         public ViewHolder(LinearLayout v, int index, IResourceEntryClickListener listener) {
             super(v);
-            mTextView = (TextView)v.findViewById(R.id.resourceName);
+            textView = (TextView)v.findViewById(R.id.resourceName);
             resourceIndex = index;
             onClickListener = listener;
             v.setOnClickListener(this);
@@ -39,7 +39,7 @@ public class ListRecyclerViewAdapter extends RecyclerView.Adapter<ListRecyclerVi
 
     public ListRecyclerViewAdapter(List<PasswordModel> myDataset,
                                    IResourceEntryClickListener listener) {
-        mDataset = myDataset;
+        dataSet = myDataset;
         onClickListener = listener;
     }
 
@@ -54,12 +54,12 @@ public class ListRecyclerViewAdapter extends RecyclerView.Adapter<ListRecyclerVi
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.resourceIndex = position;
-        holder.mTextView.setText(mDataset.get(position).name);
+        holder.textView.setText(dataSet.get(position).name);
     }
 
     @Override
     public int getItemCount() {
-        return mDataset.size();
+        return dataSet.size();
     }
 
     public interface IResourceEntryClickListener {

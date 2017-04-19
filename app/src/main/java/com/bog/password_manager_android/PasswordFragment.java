@@ -13,8 +13,8 @@ import android.widget.Button;
 
 public class PasswordFragment extends Fragment {
     public static final String RESOURCE_INDEX = "ResourceEditIndex";
-    private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter adapter;
     private ResourceActivity resourceActivity;
     private int resourceIndex = -1;
 
@@ -51,9 +51,9 @@ public class PasswordFragment extends Fragment {
 
 
     public void setContent(PasswordModel password) {
-        mAdapter = new PasswordRecyclerViewAdapter(password);
-        if (mRecyclerView != null) {
-            mRecyclerView.swapAdapter(mAdapter, false);
+        adapter = new PasswordRecyclerViewAdapter(password);
+        if (recyclerView != null) {
+            recyclerView.swapAdapter(adapter, false);
         }
     }
 
@@ -61,15 +61,15 @@ public class PasswordFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_password, container, false);
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.passwordFields);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView = (RecyclerView) view.findViewById(R.id.passwordFields);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(
-                mRecyclerView.getContext(), DividerItemDecoration.VERTICAL);
-        mRecyclerView.addItemDecoration(dividerItemDecoration);
+                recyclerView.getContext(), DividerItemDecoration.VERTICAL);
+        recyclerView.addItemDecoration(dividerItemDecoration);
 
-        if (mAdapter != null) {
-            mRecyclerView.swapAdapter(mAdapter, false);
+        if (adapter != null) {
+            recyclerView.swapAdapter(adapter, false);
         } else {
             setContent(null);
         }

@@ -22,8 +22,8 @@ public class PasswordEditFragment extends Fragment {
     public static final String FIELDS_STATE = "FieldsEditState";
     public static final int NONE_RESOURCE = -1;
     public static final int NEW_RESOURCE = -2;
-    private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter adapter;
     private ResourceActivity resourceActivity;
     private PasswordModel currentPassword;
     private int resourceIndex = NONE_RESOURCE;
@@ -39,7 +39,7 @@ public class PasswordEditFragment extends Fragment {
             resourceIndex = savedInstanceState.getInt(RESOURCE_INDEX);
             if (savedInstanceState.containsKey(FIELDS_STATE)) {
                 currentPassword = (PasswordModel) savedInstanceState.getSerializable(FIELDS_STATE);
-                mAdapter = new PasswordEditRecyclerViewAdapter(currentPassword);
+                adapter = new PasswordEditRecyclerViewAdapter(currentPassword);
             } else {
                 setContent(resourceIndex);
             }
@@ -77,9 +77,9 @@ public class PasswordEditFragment extends Fragment {
         } else {
             currentPassword = resourceActivity.getResourcesList().get(resourceIndex).clone();
         }
-        mAdapter = new PasswordEditRecyclerViewAdapter(currentPassword);
-        if (mRecyclerView != null) {
-            mRecyclerView.swapAdapter(mAdapter, false);
+        adapter = new PasswordEditRecyclerViewAdapter(currentPassword);
+        if (recyclerView != null) {
+            recyclerView.swapAdapter(adapter, false);
         }
     }
 
@@ -87,15 +87,15 @@ public class PasswordEditFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_password_edit, container, false);
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.passwordEditFields);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView = (RecyclerView) view.findViewById(R.id.passwordEditFields);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(
-                mRecyclerView.getContext(), DividerItemDecoration.VERTICAL);
-        mRecyclerView.addItemDecoration(dividerItemDecoration);
+                recyclerView.getContext(), DividerItemDecoration.VERTICAL);
+        recyclerView.addItemDecoration(dividerItemDecoration);
 
-        if (mAdapter != null) {
-            mRecyclerView.swapAdapter(mAdapter, false);
+        if (adapter != null) {
+            recyclerView.swapAdapter(adapter, false);
         } else {
             setContent(-1);
         }
@@ -147,7 +147,7 @@ public class PasswordEditFragment extends Fragment {
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog,int id) {
                                 currentPassword.additionalFields.put(userInput.getText().toString(), "");
-                                mAdapter.notifyDataSetChanged();
+                                adapter.notifyDataSetChanged();
                             }
                         })
                 .setNegativeButton(R.string.cancel,

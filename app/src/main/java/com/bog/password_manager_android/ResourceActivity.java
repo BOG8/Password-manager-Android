@@ -20,8 +20,8 @@ public class ResourceActivity extends AppCompatActivity
         implements ListRecyclerViewAdapter.IResourceEntryClickListener {
 
     private static String FRAGMENT_TAG = "some_tag";
-    SharedPreferences preferences;
-    List<PasswordModel> resources;
+    private SharedPreferences preferences;
+    private List<PasswordModel> resources;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

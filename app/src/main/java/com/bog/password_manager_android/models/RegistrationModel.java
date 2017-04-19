@@ -4,8 +4,8 @@ public class RegistrationModel {
     String username;
     String password;
 
-    public RegistrationModel(String username_, String password_) {
-        this.username = username_;
-        this.password = password_;
+    public RegistrationModel(String username, String password) {
+        this.username = username;
+        this.password = password;
     }
 }

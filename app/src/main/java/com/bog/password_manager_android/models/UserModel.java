@@ -6,10 +6,10 @@ public class UserModel {
     String data;
     String vector;
 
-    public UserModel(String username_, String password_, String data_, String vector_) {
-        this.username = username_;
-        this.password = password_;
-        this.data = data_;
-        this.vector = vector_;
+    public UserModel(String username, String password, String data, String vector) {
+        this.username = username;
+        this.password = password;
+        this.data = data;
+        this.vector = vector;
     }
 }
