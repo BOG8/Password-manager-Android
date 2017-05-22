@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">Password manager</string>
+    <string name="no_pass_text">Enter the password. It will be the master password for this application.</string>
+    <string name="hint_password">Password</string>
+    <string name="hint_login">Login</string>
+    <string name="enter">Enter</string>
+    <string name="registration">Registration</string>
+    <string name="submit">Submit</string>
+    <string name="cancel">Cancel</string>
+    <string name="wrong_password">Wrong password</string>
+    <string name="empty_password">Please, enter your password</string>
+    <string name="add_field">Add field</string>
+    <string name="remove_resource">Remove</string>
+    <string name="input_field_name">Input field name</string>
+    <string name="input_login">Input your login</string>
+    <string name="save_resource">Save</string>
+    <string name="add_resource">Add resource</string>
+    <string name="download">Download</string>
+    <string name="upload">Upload</string>
+    <string name="edit_resource">Edit resource</string>
+    <string name="validation_error">Login and password must contain at least 1 character</string>
+    <string name="registration_succes">You was successfully registered</string>
+    <string name="registration_error">"Registration error: "</string>
+    <string name="download_succes">Data was successfully downloaded</string>
+    <string name="download_error">Download error: </string>
+    <string name="upload_succes">Data was successfully uploaded</string>
+    <string name="upload_error">Upload error: </string>
+</resources>
