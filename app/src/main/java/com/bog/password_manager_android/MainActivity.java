@@ -10,9 +10,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
-    final static String PASSWORD_MANAGER = "Password manager";
-    final static String CIPHER_DATA = "cipher data";
-    final static String IV = "iv";
+    public final static String PASSWORD_MANAGER = "Password manager";
+    public final static String CIPHER_DATA = "cipher data";
+    public final static String IV = "iv";
     private final static String INITIAL_DATA = "[{\"name\": \"Example.com\", \"password\": \"MyPass1234\", \"additionalFields\": {\"login\": \"LoginExample\"}}," +
             "{\"name\": \"Site.com\", \"password\": \"HardPass\", \"additionalFields\": {\"login\": \"someLogin\", \"email\": \"email@site.com\"}}]";
 

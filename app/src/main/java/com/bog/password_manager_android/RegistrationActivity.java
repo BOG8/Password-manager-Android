@@ -6,7 +6,11 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class RegistrationActivity extends AppCompatActivity {
+import com.bog.password_manager_android.network.NetworkIntentService;
+import com.bog.password_manager_android.network.ServiceHelper;
+
+
+public class RegistrationActivity extends AppCompatActivity implements ServiceHelper.registrationListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,23 +34,23 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
     private void sendRegistrationRequest(String login, String password) {
-        NetworkManager manager = NetworkManager.getInstance();
-        manager.setRegistrationCallback(new NetworkManager.RegistrationCallback() {
-            @Override
-            public void onLoaded(Integer key) {
-                onTextLoaded(key);
-            }
-        });
-        manager.registrate(login, password);
+        ServiceHelper helper = ServiceHelper.getInstance(this);
+        helper.registrate(this, this, login, password);
     }
 
 
-    private void onTextLoaded(Integer resultCode) {
-        if (resultCode != NetworkManager.NETWORK_SUCCES) {
-            Toast.makeText(RegistrationActivity.this, getString(R.string.registration_error) + resultCode, Toast.LENGTH_SHORT).show();
+    @Override
+    protected void onStop() {
+        ServiceHelper.getInstance(this).removeRegListener();
+        super.onStop();
+    }
+
+    @Override
+    public void onRegistrationResult(String success) {
+        if (!success.equals(NetworkIntentService.REGISTRATE_SUCCESS)) {
+            Toast.makeText(RegistrationActivity.this, getString(R.string.registration_error), Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(RegistrationActivity.this, R.string.registration_succes, Toast.LENGTH_SHORT).show();
         }
     }
-
 }
