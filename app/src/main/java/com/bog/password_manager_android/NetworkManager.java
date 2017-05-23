@@ -8,7 +8,6 @@ import java.util.concurrent.Executors;
 import com.bog.password_manager_android.models.RegistrationModel;
 import com.bog.password_manager_android.models.UserModel;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -21,6 +20,7 @@ public class NetworkManager {
     public static final int NETWORK_SUCCES = 200;
     private static final NetworkManager MANAGER = new NetworkManager();
     private final Executor executor = Executors.newCachedThreadPool();
+    private final Gson gson = new Gson();
     private final String REGISTRATION_URL =  "https://backend-password-manager.herokuapp.com/api/user/";
     private final String LOAD_DATA_URL = "https://backend-password-manager.herokuapp.com/api/data/";
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
@@ -66,7 +66,6 @@ public class NetworkManager {
                 Integer resultCode;
                 try {
                     RegistrationModel model = new RegistrationModel(username, password);
-                    Gson gson = new Gson();
                     String body = gson.toJson(model);
                     resultCode = sendPostRequest(REGISTRATION_URL, body);
                 } catch (IOException e) {
@@ -95,8 +94,6 @@ public class NetworkManager {
                     if (response.code() != 200) {
                         notifyDownloadResult(null, null, response.code());
                     } else {
-                        GsonBuilder builder = new GsonBuilder();
-                        Gson gson = builder.create();
                         String jsonStr = response.body().string();
                         DoubleStringStructure result = gson.fromJson(jsonStr, DoubleStringStructure.class);
                         notifyDownloadResult(result.data, result.vector, NETWORK_SUCCES);
@@ -115,7 +112,6 @@ public class NetworkManager {
             public void run() {
                 try {
                     UserModel data = new UserModel(username, password, cipherData, iv);
-                    Gson gson = new Gson();
                     String body = gson.toJson(data);
                     Integer result = sendPostRequest(LOAD_DATA_URL, body);
                     notifyUploadResult(result);
