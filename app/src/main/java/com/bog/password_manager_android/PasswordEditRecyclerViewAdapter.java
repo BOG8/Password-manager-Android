@@ -21,11 +21,11 @@ public class PasswordEditRecyclerViewAdapter
         public EditText textViewValue;
         public Button buttonRemove;
         public int fieldIndex;
-        private PasswordEditRecyclerViewAdapter mlistener;
+        private PasswordEditRecyclerViewAdapter listener;
         public ViewHolder(LinearLayout v, int index, PasswordEditRecyclerViewAdapter listener) {
             super(v);
             fieldIndex = index;
-            mlistener = listener;
+            this.listener = listener;
             textViewName = (TextView)v.findViewById(R.id.fieldEditName);
             textViewValue = (EditText)v.findViewById(R.id.fieldEditValue);
             buttonRemove = (Button) v.findViewById(R.id.fieldEditRemove);
@@ -41,14 +41,14 @@ public class PasswordEditRecyclerViewAdapter
 
                 @Override
                 public void afterTextChanged(Editable s) {
-                    mlistener.onFieldChange(fieldIndex, s.toString());
+                    ViewHolder.this.listener.onFieldChange(fieldIndex, s.toString());
                 }
             });
         }
 
         @Override
         public void onClick(View v) {
-            mlistener.onFieldRemove(fieldIndex);
+            listener.onFieldRemove(fieldIndex);
         }
     }
 
@@ -68,11 +68,11 @@ public class PasswordEditRecyclerViewAdapter
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.fieldIndex = position;
         if (position == 0) {
-            holder.textViewName.setText("name");
+            holder.textViewName.setText(R.string.field_name_label);
             holder.textViewValue.setText(currentPassword.name);
             holder.buttonRemove.setVisibility(View.INVISIBLE);
         } else if (position == 1) {
-            holder.textViewName.setText("password");
+            holder.textViewName.setText(R.string.field_password_label);
             holder.textViewValue.setText(currentPassword.password);
             holder.buttonRemove.setVisibility(View.VISIBLE);
         }

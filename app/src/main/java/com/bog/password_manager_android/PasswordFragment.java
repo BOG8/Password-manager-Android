@@ -51,7 +51,7 @@ public class PasswordFragment extends Fragment {
 
 
     public void setContent(PasswordModel password) {
-        adapter = new PasswordRecyclerViewAdapter(password);
+        adapter = new PasswordRecyclerViewAdapter(password, getContext());
         if (recyclerView != null) {
             recyclerView.swapAdapter(adapter, false);
         }

@@ -1,5 +1,6 @@
 package com.bog.password_manager_android;
 
+import android.content.Context;
 import android.support.v4.util.Pair;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -29,11 +30,11 @@ public class PasswordRecyclerViewAdapter extends RecyclerView.Adapter<PasswordRe
         }
     }
 
-    public PasswordRecyclerViewAdapter(PasswordModel password) {
+    public PasswordRecyclerViewAdapter(PasswordModel password, Context context) {
         dataSet = new ArrayList<>();
         if (password != null) {
-            dataSet.add(Pair.create("name", password.name));
-            dataSet.add(Pair.create("password", password.password));
+            dataSet.add(Pair.create(context.getString(R.string.field_name_label), password.name));
+            dataSet.add(Pair.create(context.getString(R.string.field_password_label), password.password));
             for (Map.Entry<String, String> e : password.additionalFields.entrySet()) {
                 dataSet.add(Pair.create(e.getKey(), e.getValue()));
             }

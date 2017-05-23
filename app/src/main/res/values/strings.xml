@@ -25,4 +25,6 @@
     <string name="download_error">Download error: </string>
     <string name="upload_succes">Data was successfully uploaded</string>
     <string name="upload_error">Upload error: </string>
+    <string name="field_name_label">name</string>
+    <string name="field_password_label">password</string>
 </resources>

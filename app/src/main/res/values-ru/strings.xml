@@ -26,4 +26,6 @@
     <string name="validation_error">Логин и пароль должны содержать не менее 1 символа</string>
     <string name="input_field_name">Введите название поля</string>
     <string name="input_login">Введите ваш логин</string>
+    <string name="field_name_label">имя</string>
+    <string name="field_password_label">пароль</string>
 </resources>
