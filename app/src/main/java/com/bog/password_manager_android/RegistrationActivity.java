@@ -46,8 +46,8 @@ public class RegistrationActivity extends AppCompatActivity implements ServiceHe
     }
 
     @Override
-    public void onRegistrationResult(String success) {
-        if (!success.equals(NetworkIntentService.REGISTRATE_SUCCESS)) {
+    public void onRegistrationResult(String result) {
+        if (!result.equals(NetworkIntentService.REGISTRATE_SUCCESS)) {
             Toast.makeText(RegistrationActivity.this, getString(R.string.registration_error), Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(RegistrationActivity.this, R.string.registration_succes, Toast.LENGTH_SHORT).show();

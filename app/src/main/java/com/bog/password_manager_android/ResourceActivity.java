@@ -186,13 +186,16 @@ public class ResourceActivity extends AppCompatActivity
 
 
     @Override
-    public void onDownload (String success) {
-        onDataLoaded(null, null, NetworkManager.NETWORK_SUCCESS);
+    public void onDownload (String result) {
+        if (result.equals(NetworkIntentService.DOWNLOAD_SUCCESS))
+            onDataLoaded(null, null, NetworkManager.NETWORK_SUCCESS);
+        else
+            onDataLoaded(null, null, NetworkManager.NETWORK_ERROR);
     }
 
     @Override
-    public void onUpload(String success) {
-        if (!success.equals(NetworkIntentService.UPLOAD_SUCCESS)) {
+    public void onUpload(String result) {
+        if (!result.equals(NetworkIntentService.UPLOAD_SUCCESS)) {
             Toast.makeText(this, getString(R.string.upload_error), Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(this, R.string.upload_succes, Toast.LENGTH_SHORT).show();

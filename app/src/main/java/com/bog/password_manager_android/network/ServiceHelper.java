@@ -10,15 +10,15 @@ public class ServiceHelper {
     private static ServiceHelper instance =  null;
 
     public interface registrationListener {
-        void onRegistrationResult(final String success);
+        void onRegistrationResult(final String result);
     }
 
     public interface uploadListener {
-        void onUpload(final String success);
+        void onUpload(final String result);
     }
 
     public interface downloadListener {
-        void onDownload(final String success);
+        void onDownload(final String result);
     }
 
     private registrationListener regListener;
@@ -46,16 +46,16 @@ public class ServiceHelper {
             @Override
             public void onReceive(final Context context, final Intent intent) {
                 if (regListener != null || upListener != null || downListener != null) {
-                    final String success = intent.getStringExtra(NetworkIntentService.EXTRA_SUCCESS);
+                    final String result = intent.getStringExtra(NetworkIntentService.EXTRA_SUCCESS);
                     final String action = intent.getStringExtra(NetworkIntentService.EXTRA_ACTION);
                     if (action.equals(NetworkIntentService.REGISTRATE_ACTION)) {
-                        regListener.onRegistrationResult(success);
+                        regListener.onRegistrationResult(result);
                     }
                     if (action.equals(NetworkIntentService.DOWNLOAD_ACTION)) {
-                        downListener.onDownload(success);
+                        downListener.onDownload(result);
                     }
                     if (action.equals(NetworkIntentService.UPLOAD_ACTION)) {
-                        upListener.onUpload(success);
+                        upListener.onUpload(result);
                     }
                 }
             }
