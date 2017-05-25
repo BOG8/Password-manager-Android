@@ -49,6 +49,10 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(new Intent(MainActivity.this, ResourceActivity.class));
                     }
                 } else {
+                    //TODO удалить все кроме тоаста
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString(CIPHER_DATA, null);
+                    editor.apply();
                     Toast.makeText(MainActivity.this, R.string.empty_password, Toast.LENGTH_SHORT).show();
                 }
             }

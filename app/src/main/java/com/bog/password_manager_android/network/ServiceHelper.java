@@ -80,8 +80,8 @@ public class ServiceHelper {
         intent.putExtra(NetworkIntentService.EXTRA_ACTION, NetworkIntentService.UPLOAD_ACTION);
         intent.putExtra(NetworkIntentService.EXTRA_USERNAME, username);
         intent.putExtra(NetworkIntentService.EXTRA_PASSWORD, password);
-        intent.putExtra(NetworkIntentService.EXTRA_DATA, username);
-        intent.putExtra(NetworkIntentService.EXTRA_IV, password);
+        intent.putExtra(NetworkIntentService.EXTRA_DATA, cipherData);
+        intent.putExtra(NetworkIntentService.EXTRA_IV, iv);
         context.startService(intent);
     }
 
