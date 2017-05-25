@@ -12,15 +12,19 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.bog.password_manager_android.network.NetworkIntentService;
+import com.bog.password_manager_android.network.NetworkManager;
+import com.bog.password_manager_android.network.ServiceHelper;
+
 import java.util.List;
 
 import static com.bog.password_manager_android.MainActivity.*;
 
 public class ResourceActivity extends AppCompatActivity
-        implements ListRecyclerViewAdapter.IResourceEntryClickListener {
+        implements ListRecyclerViewAdapter.IResourceEntryClickListener, ServiceHelper.downloadListener, ServiceHelper.uploadListener {
 
     private static String FRAGMENT_TAG = "some_tag";
-    private SharedPreferences preferences;
+    public static SharedPreferences preferences;
     private List<PasswordModel> resources;
 
     @Override
@@ -110,18 +114,13 @@ public class ResourceActivity extends AppCompatActivity
                 .setPositiveButton(R.string.submit,
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                NetworkManager manager = NetworkManager.getInstance();
-                                manager.setDownloadCallback(new NetworkManager.DownloadCallback() {
-                                    @Override
-                                    public void onDownLoaded(String cipherData, String iv, int resultCode) {
-                                        onDataLoaded(cipherData, iv, resultCode);
-                                    }
-                                });
+                                ServiceHelper helper = ServiceHelper.getInstance(ResourceActivity.this);
+
 
                                 PasswordCipher cipher = PasswordCipher.getInstance();
                                 String password = cipher.getPassword();
                                 String username = userInput.getText().toString();
-                                manager.downloadData(username, password);
+                                helper.download(ResourceActivity.this, ResourceActivity.this, username, password);
                             }
                         }
                 )
@@ -138,10 +137,6 @@ public class ResourceActivity extends AppCompatActivity
 
     private void onDataLoaded(String cipherData, String iv, int resultCode) {
         if (resultCode == 200) {
-            SharedPreferences.Editor editor = preferences.edit();
-            editor.putString(CIPHER_DATA, cipherData);
-            editor.putString(IV, iv);
-            editor.apply();
             fillResources();
 
             // update
@@ -166,20 +161,14 @@ public class ResourceActivity extends AppCompatActivity
                 .setPositiveButton(R.string.submit,
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                NetworkManager manager = NetworkManager.getInstance();
-                                manager.setUploadCallback(new NetworkManager.UploadCallback() {
-                                    @Override
-                                    public void onUploaded(Integer resultCode) {
-                                        onDataUploaded(resultCode);
-                                    }
-                                });
+                                ServiceHelper helper = ServiceHelper.getInstance(ResourceActivity.this);
 
                                 String cipherData = preferences.getString(CIPHER_DATA, null);
                                 String iv = preferences.getString(IV, null);
                                 PasswordCipher cipher = PasswordCipher.getInstance();
                                 String password = cipher.getPassword();
                                 String username = userInput.getText().toString();
-                                manager.uploadData(username, password, cipherData, iv);
+                                helper.upload(ResourceActivity.this, ResourceActivity.this, username, password, cipherData, iv);
                             }
                         }
                 )
@@ -194,12 +183,30 @@ public class ResourceActivity extends AppCompatActivity
         alertDialog.show();
     }
 
-    public void onDataUploaded(Integer resultCode) {
-        if (resultCode != 200) {
-            Toast.makeText(this, getString(R.string.upload_error) + resultCode, Toast.LENGTH_SHORT).show();
+
+
+    @Override
+    public void onDownload (String result) {
+        if (result.equals(NetworkIntentService.DOWNLOAD_SUCCESS))
+            onDataLoaded(null, null, NetworkManager.NETWORK_SUCCESS);
+        else
+            onDataLoaded(null, null, NetworkManager.NETWORK_ERROR);
+    }
+
+    @Override
+    public void onUpload(String result) {
+        if (!result.equals(NetworkIntentService.UPLOAD_SUCCESS)) {
+            Toast.makeText(this, getString(R.string.upload_error), Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(this, R.string.upload_succes, Toast.LENGTH_SHORT).show();
         }
     }
 
+    @Override
+    protected void onStop() {
+        ServiceHelper helper = ServiceHelper.getInstance(this);
+        helper.removeDownloadListener();
+        helper.removeUpLoadListener();
+        super.onStop();
+    }
 }

@@ -22,6 +22,10 @@
 
         </activity>
         <activity android:name=".ResourceActivity"></activity>
+
+        <service
+            android:name=".network.NetworkIntentService"
+            android:exported="false"></service>
     </application>
 
 </manifest>
