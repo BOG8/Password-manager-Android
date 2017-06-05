@@ -7,9 +7,11 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +32,7 @@ public class ListFragment extends Fragment
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         adapter = new ListRecyclerViewAdapter(resourceActivity.getResourcesList(), this);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -63,27 +66,11 @@ public class ListFragment extends Fragment
             setContent(new ArrayList<PasswordModel>());
         }
 
-        ((Button) view.findViewById(R.id.add_resource))
+        view.findViewById(R.id.add_resource)
                 .setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         resourceActivity.onAddResourceClick();
-                    }
-                });
-
-        ((Button) view.findViewById(R.id.download_resources))
-                .setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        resourceActivity.onDownloadResourcesClick();
-                    }
-                });
-
-        ((Button) view.findViewById(R.id.upload_resources))
-                .setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        resourceActivity.onUploadResourcesClick();
                     }
                 });
 
@@ -95,5 +82,26 @@ public class ListFragment extends Fragment
         if (onResourceEntryClickListener != null) {
             onResourceEntryClickListener.onResourceEntryClick(index);
         }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu,
+                                    MenuInflater inflater) {
+        inflater.inflate(R.menu.password_list_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.download_resources:
+                resourceActivity.onDownloadResourcesClick();
+                return true;
+            case R.id.upload_resources:
+                resourceActivity.onUploadResourcesClick();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

@@ -74,7 +74,7 @@ public class PasswordFragment extends Fragment {
             setContent(null);
         }
 
-        ((Button) view.findViewById(R.id.edit_resource))
+        view.findViewById(R.id.edit_resource)
                 .setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

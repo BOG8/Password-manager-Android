@@ -1,5 +1,6 @@
 package com.bog.password_manager_android;
 
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -74,12 +75,14 @@ public class PasswordEditRecyclerViewAdapter
         } else if (position == 1) {
             holder.textViewName.setText(R.string.field_password_label);
             holder.textViewValue.setText(currentPassword.password);
+            holder.buttonRemove.setBackgroundResource(R.drawable.ic_refresh_black_24dp);
             holder.buttonRemove.setVisibility(View.VISIBLE);
         }
         else {
             String key = (String) currentPassword.additionalFields.keySet().toArray()[position-2];
             holder.textViewName.setText(key);
             holder.textViewValue.setText(currentPassword.additionalFields.get(key));
+            holder.buttonRemove.setBackgroundResource(R.drawable.ic_delete_black_24dp);
             holder.buttonRemove.setVisibility(View.VISIBLE);
         }
     }

@@ -11,6 +11,9 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -35,6 +38,7 @@ public class PasswordEditFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         if (savedInstanceState != null) {
             resourceIndex = savedInstanceState.getInt(RESOURCE_INDEX);
             if (savedInstanceState.containsKey(FIELDS_STATE)) {
@@ -100,29 +104,13 @@ public class PasswordEditFragment extends Fragment {
             setContent(-1);
         }
 
-        Button addFieldButton = (Button) view.findViewById(R.id.add_field);
-        addFieldButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onAddFieldClick();
-            }
-        });
-
-        Button removeResourceButton = (Button) view.findViewById(R.id.remove_resource);
-        removeResourceButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onRemoveResourceClick();
-            }
-        });
-
-        Button saveResourceButton = (Button) view.findViewById(R.id.save_resource);
-        saveResourceButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onSaveResourceClick();
-            }
-        });
+        view.findViewById(R.id.add_field)
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        onAddFieldClick();
+                    }
+                });
 
         return view;
     }
@@ -182,4 +170,27 @@ public class PasswordEditFragment extends Fragment {
             getFragmentManager().popBackStack();
         }
     }
+
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu,
+                                    MenuInflater inflater) {
+        inflater.inflate(R.menu.password_edit_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.remove_resource:
+                onRemoveResourceClick();
+                return true;
+            case R.id.save_resource:
+                onSaveResourceClick();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 }
