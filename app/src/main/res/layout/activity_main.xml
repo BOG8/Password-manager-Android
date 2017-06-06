@@ -17,19 +17,21 @@
 
     <EditText
         android:id="@+id/password_edit_text"
-        android:layout_width="match_parent"
+        android:layout_width="211dp"
         android:layout_height="wrap_content"
         android:hint="@string/hint_password"
-        android:textAlignment="center"
-        android:inputType="textPassword" />
+        android:inputType="textPassword"
+        android:textAlignment="center" />
+
     <Button
         android:id="@+id/entering_button"
-        android:layout_width="match_parent"
+        android:layout_width="151dp"
         android:layout_height="wrap_content"
         android:text="@string/enter" />
+
     <Button
         android:id="@+id/registration_button"
-        android:layout_width="match_parent"
+        android:layout_width="151dp"
         android:layout_height="wrap_content"
         android:text="@string/registration" />
 

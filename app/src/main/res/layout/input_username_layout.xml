@@ -5,15 +5,16 @@
     android:orientation="vertical">
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="358dp"
         android:layout_height="wrap_content"
         android:text="@string/input_login"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <EditText
         android:id="@+id/editTextDialogUserInput"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_width="358dp"
+        android:layout_height="wrap_content">
+
         <requestFocus />
     </EditText>
 
